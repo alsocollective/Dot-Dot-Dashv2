@@ -75,6 +75,8 @@ var theVideo;
 videojs("vid_1").ready(function(){
 	theVideo = this;
 	videoContainer = document.getElementById("vid_1");
+	theVideo.volume(0);
+	//console.log(theVideo.volume());
 });
 
 function backGroundChange(){
