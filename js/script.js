@@ -58,11 +58,10 @@ $("#largeLogo").one('load',function(){						//when the image loads do this
 
 
 var background = document.getElementById("backgroundImage");
-
 var videos = [
-	{"at":0,"range":400,"parent":document.getElementById("openingQuote"),"mp4":"http://localhost:8000/videos/Lightning/Lightning.mp4"},
-	{"at":100,"range":400,"parent":document.getElementById("optimismQuote"),"mp4":"http://localhost:8000/videos/River/River.mp4"},
-	{"at":200,"range":400,"parent":document.getElementById("clients"),"mp4":"http://localhost:8000/videos/Waterfall/Waterfall1.mp4"}
+	{"at":0,"range":400,"parent":document.getElementById("openingQuote"),"mp4":"http://localhost:8000/video/Lightning/Lightning.mp4"},
+	{"at":100,"range":400,"parent":document.getElementById("optimismQuote"),"mp4":"http://localhost:8000/video/River/River.mp4"},
+	{"at":200,"range":400,"parent":document.getElementById("clients"),"mp4":"http://localhost:8000/video/Waterfall/Waterfall1.mp4"}
 ];
 
 determinHightsForVids();
