@@ -1,0 +1,9 @@
+*.jpg
+*.jpeg
+*.png
+*.gif
+.DS_Store
+old/
+work/img/
+video/
+img/

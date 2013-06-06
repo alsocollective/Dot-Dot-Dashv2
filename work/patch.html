@@ -1,0 +1,82 @@
+<div id="slideShowImages">
+	<div class="slide" id="sec1">
+		<div id="leftSubWork">
+			<img src="work/img/antica.jpg" width="90%" height="auto">
+		</div>
+	</div>
+	<div class="slide" id="sec2">
+
+	</div>
+	<div class="slide" id="sec3">
+
+	</div>
+	<div class="slide" id="sec4">
+
+	</div>
+	<div class="slide" id="sec5">
+
+	</div>
+</div>
+</div>
+<div id="rightSubWork">
+	<h1>ANTICA</h1>
+	<p>
+		We don’t have any formal training
+		in mark·etinq and it shows. We are
+		nondoqmatic and generally don’t care
+		about existing rules or protocols.
+		We blur the lines between account
+		and creative personnel and encourage
+		our teams to get completely immersed
+		in solving business problems. We
+		speak to our clients in normal
+		language rather than jargon. We treat
+		our clients, and their customers,
+		as humans, not as metrics or
+		demogiaphics. What we do care about
+		is success. We want to keep our
+		campaigns and our jobs interesting
+		and imaginative. We did not set out
+		to compete on level ground with
+		other advertising agencies, so we
+		use asymmetrical tactics to get
+		results, often big one’s. We believe
+		in ourselves and we believe in our
+		clients. It shows in our work. If
+		you are a great organization or
+		cornpany, and want to do something
+		oriqinal, please give us a call. If
+		you want to roll out another same-old
+		seasonal campaign around a mundane
+		and tired product, differentiated
+		from its competition only by
+		branding, p1ease call someone else.
+	</p>
+	<h3>PROJECT ASSETS:</h3>
+	<ul>
+		<li><a id="Jmiller" href="#sec1">Jamie Miller</a></li>
+		<li><a id="image1" href="#sec2">image1</a></li>
+		<li><a id="image2" href="#sec3">image2</a></li>
+		<li><a id="image3" href="#sec3">image3</a></li>
+		<li><a id="image4" href="#sec3">image4</a></li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+
+var locButtons = new Buttons([ "sec1","Jmiller","sec2","image1","sec3","image2","sec4","image3","sec5","image4"]);
+
+var imagesList = [
+  'work/img/1.png',
+  'work/img/2.png',
+  'work/img/3.png',
+  'work/img/2.png',
+  'work/img/3.png'
+ ]
+
+var slides = $(".slide");
+slides.each(function(index){
+	$(slides[index]).backstretch(imagesList[index]);
+})
+
+</script>
