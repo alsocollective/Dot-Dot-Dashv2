@@ -57,51 +57,97 @@ $("#largeLogo").one('load',function(){						//when the image loads do this
 });
 
 
-var background = document.getElementById("backgroundImage");
+
 var videos = [
-	{"at":0,"range":400,"parent":document.getElementById("openingQuote"),"mp4":"http://alsocollective.com/testdirectory/Dot-Dot-Dashv2/video/Lightning/Lightning.mp4"},
-	{"at":100,"range":400,"parent":document.getElementById("optimismQuote"),"mp4":"http://alsocollective.com/testdirectory/Dot-Dot-Dashv2/video/River/River.mp4"},
-	{"at":200,"range":400,"parent":document.getElementById("clients"),"mp4":"http://alsocollective.com/testdirectory/Dot-Dot-Dashv2/video/Waterfall/Waterfall1.mp4"}
+	{"range":400,"parent":document.getElementById("openingQuote"),"mp4":"http://localhost/videos/Lightning/Lightning.mp4"},
+	{"range":400,"parent":document.getElementById("about"),"img":1},
+	{"range":400,"parent":document.getElementById("services"),"img":2},
+	{"range":400,"parent":document.getElementById("clients"),"img":3},
+	{"range":400,"parent":document.getElementById("work"),"mp4":"http://localhost/videos/River/River.mp4"},
+	{"range":400,"parent":document.getElementById("collaboQuote"),"img":4},
+	{"range":400,"parent":document.getElementById("contact"),"mp4":"http://localhost/videos/Waterfall/Waterfall1.mp4"}
 ];
 
+//find the location at which these elements occure
 determinHightsForVids();
 
 
 var currentVid = 0;
 
-var videoContainer;
+var videoContainer = document.getElementById("vid_1");
+var imageContainer = document.getElementById("bkStrechImage");
 
-var theVideo;
-videojs("vid_1").ready(function(){
-	theVideo = this;
-	videoContainer = document.getElementById("vid_1");
+var images = $(imageContainer).backstretch([
+	'img/landscape1.jpg',
+	'img/landscape2.jpg',
+	'img/landscape3.jpg',
+	'img/landscape4.jpg'
+], {fade: 500}).data('backstretch').pause();
+imageContainer.style.opacity = 0;
+
+var theVideo = _V_("vid_1");
+theVideo.ready(function(){
+	theVideo.play();
 	theVideo.volume(0);
-	//console.log(theVideo.volume());
 });
 
 function backGroundChange(){
+
 	for(var a = 0; a < videos.length; ++a){
 		if(videos[a]["at"]-(videos[a]["range"]/2) < scrollFromTop && videos[a]["at"]+(videos[a]["range"]/2) > scrollFromTop){
 			if(videos[a]["at"]<scrollFromTop){
 				if(a != currentVid){
-					videoContainer.style.opacity = 0;
-					currentVid = a;
-					setTimeout(function(){
-						theVideo.src(videos[currentVid]["mp4"]);
-						videoContainer.style.opacity = 1;
-					},500);
+					if(videos[a]["img"]){
+						console.log("image");
+						imageContainer.style.opacity = 1;
+						images.show(a-1);
+						currentVid = a;
+					} else if (videos[a]["mp4"]){
+						console.log("video");
+						currentVid = a;
+						setTimeout(function(){
+							if(videos[currentVid]["mp4"]){
+								theVideo.src(videos[currentVid]["mp4"]);
+								theVideo.play();
+							}
+							imageContainer.style.opacity = 0;
+						},500);
+					}
 				}
 			}
 
 			if(videos[a]["at"]>scrollFromTop){
+
 				if(a!= 0 && a-1 != currentVid){
-					videoContainer.style.opacity = 0;
-					currentVid = a-1;
-					setTimeout(function(){
-						theVideo.src(videos[currentVid]["mp4"]);
-						videoContainer.style.opacity = 1;
-					},500);
+					if(videos[a-1]["img"]){
+						console.log("image");
+						imageContainer.style.opacity = 1;
+						images.show(a-2);
+						currentVid = a-1;
+					} else if (videos[a-1]["mp4"]){
+						console.log("video");
+						currentVid = a-1;
+						setTimeout(function(){
+							if(videos[currentVid]["mp4"]){
+								theVideo.src(videos[currentVid]["mp4"]);
+								theVideo.play();
+							}
+							imageContainer.style.opacity = 0;
+						},500);
+					}
 				}
+
+				// if(a!= 0 && a-1 != currentVid){
+				// 	videoContainer.style.opacity = 0;
+				// 	currentVid = a-1;
+				// 	setTimeout(function(){
+				// 		if(videos[currentVid]["mp4"]){
+				// 			theVideo.src(videos[currentVid]["mp4"]);
+				// 			theVideo.play();
+				// 		}
+				// 		videoContainer.style.opacity = 1;
+				// 	},500);
+				// }
 			}
 		}
 	}
@@ -176,7 +222,6 @@ function Slide(options){
 	}
 
 	this.backToMenue = function(){
-		console.log("back to main");
 		showMenue();
 	}
 }
@@ -192,7 +237,6 @@ function Buttons(tags){
 		buttons.push(document.getElementById(tags[a]))
 		buttons[buttons.length-1].addEventListener("click", function(event){
 			event.preventDefault();
-			console.log(this);
 			hideAllBut(this);
 		});
 	}
@@ -206,7 +250,6 @@ function Buttons(tags){
 	function hideAllBut(Element){
 		for(var a = 0; a < elements.length; ++a){
 			if(buttons[a].id == Element.id){
-				console.log("THIS one", elements[a].id)
 				with(elements[a].style){
 					overflow = "auto";
 					display = "block";
@@ -221,7 +264,6 @@ function Buttons(tags){
 	}
 
 	this.position = function(){
-		console.log(absoluteParent.clientHeight, parent.clientHeight);
 		var topOut = (absoluteParent.clientHeight - parent.clientHeight);
 		with(parent.style){
 			position = "absolute";
@@ -272,14 +314,17 @@ function setUpStaticLocationOfSticky(didNotLoad){		//loaded can either come in a
 function FadeingObject(element){
 	var quote = document.getElementById(element);
 	var quoteTop = getPageTopLeft(quote).top;
+	var quoteSize = $(quote).height();
 
 	this.resized = function(){
 		quoteTop = getPageTopLeft(quote).top;
+		quoteSize = $(quote).height();
 	}
 
 	this.makeFade = function(scrollLocation,height){
-		if(scrollLocation > quoteTop - height && scrollLocation < quoteTop + height){
-			var transparency = (scrollLocation-quoteTop+(height/2))/height/4*10;
+		if(scrollLocation > quoteTop - height + quoteSize/2 && scrollLocation < quoteTop + height + quoteSize/2){
+			//var transparency = (scrollLocation-quoteTop+(height/2))/height/4*10;
+			var transparency = (scrollLocation-quoteTop)/(height/2); //at half way point we have max opacity
 			if(transparency > 0){
 				transparency = transparency*-1;
 			}

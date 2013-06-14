@@ -30,7 +30,7 @@
 		<script src="js/video.js"></script>
 
 		<script>
-			videojs.options.flash.swf = "js/video-js.swf";
+			_V_.options.flash.swf = "http://example.com/path/to/video-js.swf"
 		</script>
 
     </head>
@@ -52,11 +52,15 @@
 	</ul>
 </nav>
 
-<div id="backgroundImage"><video id="vid_1" class="video-js vjs-default-skin" preload="none" width="auto" height="auto" poster="video/Lightning/Lightning.jpg" data-setup='{ "controls": false, "autoplay": true, "preload": "auto", "loop": "true"}'>
-		<source src="http://localhost:8000/video/Lightning/Lightning.mp4" type='video/mp4' />
-		<source src="http://localhost:8000/video/Lightning/Lightning.webm" type='video/webm' />
-		<source src="http://localhost:8000/video/Lightning/Lightning.ogv" type='video/ogg' />
+
+<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="video/Lightning/Lightning.jpg" data-setup='{ "controls": false, "autoplay": true, "preload": "auto", "loop": true}'>
+		<source src="http://localhost/videos/Lightning/Lightning.mp4" type='video/mp4' />
+		<source src="http://localhost/video/Lightning/Lightning.webm" type='video/webm' />
+		<source src="http://localhost/video/Lightning/Lightning.ogv" type='video/ogg' />
 	</video>
+</div>
+<div class="bkImage" id="bkStrechImage">
+
 </div>
 
 <div id="firstPadding"></div>
@@ -294,13 +298,13 @@
 <script src="js/script.js"></script>
 
 <script type="text/javascript">
-  (function() {
-    var config = {
-      kitId: 'pvh7czu',
-      scriptTimeout: 3000
-    };
-    var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
-  })();
+  // (function() {
+  //   var config = {
+  //     kitId: 'pvh7czu',
+  //     scriptTimeout: 3000
+  //   };
+  //   var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+  // })();
 </script>
 
 <body>
