@@ -19,6 +19,9 @@
 </div>
 </div>
 <div id="rightSubWork">
+	<div id="moreRightSubWork">
+		<p>+</p>
+	</div>
 	<h1>ANTICA</h1>
 	<p>
 		We don’t have any formal training
@@ -76,7 +79,7 @@ var imagesList = [
 
 var slides = $(".slide");
 slides.each(function(index){
-	$(slides[index]).backstretch(imagesList[index]);
+	$(slides[index]).backstretch(imagesList[index],{fade: 500});
 })
 
 </script>

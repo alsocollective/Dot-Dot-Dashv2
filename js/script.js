@@ -59,13 +59,25 @@ $("#largeLogo").one('load',function(){						//when the image loads do this
 
 
 var videos = [
-	{"range":400,"parent":document.getElementById("openingQuote"),"mp4":"http://localhost/videos/Lightning/Lightning.mp4"},
-	{"range":400,"parent":document.getElementById("about"),"img":1},
-	{"range":400,"parent":document.getElementById("services"),"img":2},
-	{"range":400,"parent":document.getElementById("clients"),"img":3},
-	{"range":400,"parent":document.getElementById("work"),"mp4":"http://localhost/videos/River/River.mp4"},
+	{"range":400,"parent":document.getElementById("openingQuote"),"tag":"remove","mp4":[
+		{type: "video/mp4", src: "http://localhost/videos/Lightning/Lightning.mp4"},
+		{type: "video/webm", src: "http://localhost/videos/Lightning/Lightning.webm"},
+		{type: "video/ogv", src: "http://localhost/videos/Lightning/Lightning.ogv"}
+	]},
+	{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
+	{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
+	{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
+	{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
+		{type: "video/mp4", src: "http://localhost/videos/River/River.mp4"},
+		{type: "video/webm", src: "http://localhost/videos/River/River.webm"},
+		{type: "video/ogv", src: "http://localhost/videos/River/River.ovg"}
+	]},
 	{"range":400,"parent":document.getElementById("collaboQuote"),"img":4},
-	{"range":400,"parent":document.getElementById("contact"),"mp4":"http://localhost/videos/Waterfall/Waterfall1.mp4"}
+	{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","mp4":[
+		{type: "video/mp4", src: "http://localhost/videos/Waterfall/Waterfall1.mp4"},
+		{type: "video/webm", src: "http://localhost/videos/Waterfall/Waterfall1.webm"},
+		{type: "video/ogv", src: "http://localhost/videos/Waterfall/Waterfall1.ogv"}
+	]}
 ];
 
 //find the location at which these elements occure
@@ -78,65 +90,85 @@ var videoContainer = document.getElementById("vid_1");
 var imageContainer = document.getElementById("bkStrechImage");
 
 var images = $(imageContainer).backstretch([
-	'img/landscape1.jpg',
-	'img/landscape2.jpg',
-	'img/landscape3.jpg',
-	'img/landscape4.jpg'
+	'img/BK1.jpg',
+	'img/BK2.jpg',
+	'img/BK3.jpg',
+	'img/BK4.jpg'
 ], {fade: 500}).data('backstretch').pause();
 imageContainer.style.opacity = 0;
 
 var theVideo = _V_("vid_1",{"loop": "true","autoplay": true,"controls": false});
 theVideo.ready(function(){
+	theVideo.src(videos[0]["mp4"]);
 	theVideo.play();
 	theVideo.volume(0);
 });
 
+var transitioning = false;
+
 function backGroundChange(){
 	for(var a = 0; a < videos.length; ++a){
-		if(videos[a]["at"]-(videos[a]["range"]/2) < scrollFromTop && videos[a]["at"]+(videos[a]["range"]/2) > scrollFromTop){
+		if(videos[a]["at"]-(videos[a]["range"]/2) < scrollFromTop && videos[a]["at"]+(videos[a]["range"]/2) > scrollFromTop && !transitioning){
 			if(videos[a]["at"]<scrollFromTop){
 				if(a != currentVid){
+					transitioning = true;
 					if(videos[a]["img"]){
-						console.log("image");
 						imageContainer.style.opacity = 1;
-						images.show(a-1);
+						images.show(videos[a]["img"]-1);
+						setTimeout(function(){
+							transitioning = false;
+						},500)
 						currentVid = a;
 					} else if (videos[a]["mp4"]){
-						console.log("video");
 						currentVid = a;
+						theVideo.src(videos[currentVid]["mp4"]);
+						theVideo.play();
 						setTimeout(function(){
-							if(videos[currentVid]["mp4"]){
-								theVideo.src(videos[currentVid]["mp4"]);
-								theVideo.play();
-							}
+							transitioning = false;
 							imageContainer.style.opacity = 0;
 						},500);
 					}
+					highLight(document.getElementById(videos[currentVid]["tag"]))
 				}
-			}
-
-			if(videos[a]["at"]>scrollFromTop){
-
+			} else if(videos[a]["at"]>scrollFromTop){
 				if(a!= 0 && a-1 != currentVid){
+					transitioning = true;
 					if(videos[a-1]["img"]){
-						console.log("image");
 						imageContainer.style.opacity = 1;
-						images.show(a-2);
-						currentVid = a-1;
-					} else if (videos[a-1]["mp4"]){
-						console.log("video");
+						images.show(videos[a-1]["img"]-1);
 						currentVid = a-1;
 						setTimeout(function(){
-							if(videos[currentVid]["mp4"]){
-								theVideo.src(videos[currentVid]["mp4"]);
-								theVideo.play();
-							}
+							transitioning = false;
+						},500)
+					} else if (videos[a-1]["mp4"]){
+						currentVid = a-1;
+						theVideo.src(videos[currentVid]["mp4"]);
+						theVideo.play();
+						setTimeout(function(){
+							transitioning = false;
 							imageContainer.style.opacity = 0;
 						},500);
 					}
+					highLight(document.getElementById(videos[currentVid]["tag"]))
 				}
 			}
 		}
+	}
+}
+
+function highLight(element){
+	if(element){
+		var siblings = element.parentNode.childNodes;
+		$(siblings).each(function(index){
+			if(siblings[index].nodeType == 1){
+				if(siblings[index] == element){
+					element.childNodes[0].setAttribute("class","activeLink");
+				} else {
+					siblings[index].childNodes[0].setAttribute("class","");
+				}
+			}
+		});
+
 	}
 }
 
@@ -194,6 +226,7 @@ function Slide(options){
 	function loadThisEl(element){
 		for(var a =0; a < pages.length; ++a){
 			if(element.id == pages[a]["id"]){
+				//possibly add the function to the canavs the size of window-menue bar
 				$(loadingArea).load(pages[a]["link"]);
 				$(loadingArea).ready(function(){
 					hideMenue();
@@ -228,6 +261,8 @@ function Buttons(tags){
 		});
 	}
 
+	var parentEl = elements[0].parentNode;
+
 	elements[0].style.display = "block";
 
 
@@ -235,19 +270,25 @@ function Buttons(tags){
 	var absoluteParent = parent.parentNode;
 
 	function hideAllBut(Element){
-		for(var a = 0; a < elements.length; ++a){
-			if(buttons[a].id == Element.id){
-				with(elements[a].style){
-					overflow = "auto";
-					display = "block";
-				}
-			} else {
-				with(elements[a].style){
-					overflow = "hidden";
-					display = "none";
+		//parentEl.style.height = "0%";
+		parentEl.style.opacity = "0";
+		setTimeout(function(){
+			for(var a = 0; a < elements.length; ++a){
+				if(buttons[a].id == Element.id){
+					with(elements[a].style){
+						overflow = "auto";
+						display = "block";
+					}
+				} else {
+					//parentEl.style.height = "100%";
+					parentEl.style.opacity = "1";
+					with(elements[a].style){
+						overflow = "hidden";
+						display = "none";
+					}
 				}
 			}
-		}
+		},500);
 	}
 
 	this.position = function(){
@@ -274,6 +315,9 @@ function goToThisEndPoint(location){
 		top;
 	}
 	$(body).animate({scrollTop : top+100},1000);
+	setTimeout(function(){
+		backGroundChange()
+	},1600);
 	setTimeout(function(){
 		//wait till after the scroll
 		setHashTag(location);
