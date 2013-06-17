@@ -85,14 +85,13 @@ var images = $(imageContainer).backstretch([
 ], {fade: 500}).data('backstretch').pause();
 imageContainer.style.opacity = 0;
 
-var theVideo = _V_("vid_1");
+var theVideo = _V_("vid_1",{"loop": "true","autoplay": true,"controls": false});
 theVideo.ready(function(){
 	theVideo.play();
 	theVideo.volume(0);
 });
 
 function backGroundChange(){
-
 	for(var a = 0; a < videos.length; ++a){
 		if(videos[a]["at"]-(videos[a]["range"]/2) < scrollFromTop && videos[a]["at"]+(videos[a]["range"]/2) > scrollFromTop){
 			if(videos[a]["at"]<scrollFromTop){
@@ -136,18 +135,6 @@ function backGroundChange(){
 						},500);
 					}
 				}
-
-				// if(a!= 0 && a-1 != currentVid){
-				// 	videoContainer.style.opacity = 0;
-				// 	currentVid = a-1;
-				// 	setTimeout(function(){
-				// 		if(videos[currentVid]["mp4"]){
-				// 			theVideo.src(videos[currentVid]["mp4"]);
-				// 			theVideo.play();
-				// 		}
-				// 		videoContainer.style.opacity = 1;
-				// 	},500);
-				// }
 			}
 		}
 	}
@@ -286,7 +273,7 @@ function goToThisEndPoint(location){
 	if(location == "work"){
 		top;
 	}
-	$(body).animate({scrollTop : top},1000);
+	$(body).animate({scrollTop : top+100},1000);
 	setTimeout(function(){
 		//wait till after the scroll
 		setHashTag(location);
