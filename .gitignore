@@ -7,3 +7,4 @@ old/
 work/img/
 video/
 img/
+*.pyc
