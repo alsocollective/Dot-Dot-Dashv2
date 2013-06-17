@@ -1,8 +1,7 @@
 <!DOCTYPE html lang="en">
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xmlns:x2="http://www.w3.org/2002/06/xhtml2">
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,6 +19,7 @@
         <meta name="viewport" content="width=1024, user-scalable=no">
 
 		<!--Stylesheets-->
+		<link rel="stylesheet" type="text/css" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
 
 <!-- We need to get the logo in here! -->
@@ -278,21 +278,127 @@
 </section>
 
 <section id="socMedia">
-	<a href="#">facebook</a>
-	<a href="#">twitter</a>
+
 </section>
 
 <section id="contact">
-	<h2>EMAIL</h2>
-	<h3>COLLABORATE@DOTDOTDASH.com</h3>
-	<h2>Phone</h2>
-	<h3>416 846 2236</h3>
+	<div id="contactContainer">
+		<h2>EMAIL</h2>
+		<h3>COLLABORATE@DOTDOTDASH.com</h3>
+		<h2>Phone</h2>
+		<h3>416 846 2236</h3>
+		<a href="#">facebook</a> <a href="#">twitter</a>
+	</div>
 </section>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/waypoints.min.js"></script>
 <script src="js/jquery.backstretch.min.js"></script>
 <script src="js/script.js"></script>
+<script type="text/javascript">
+//INITIALIZATION of everything!!
+	var scrollFromTop = 0;
+	var windowHeight = windowSize().height;
+//this allows us to use transparency
+	var useOpacity = (typeof document.createElement("div").style.opacity != 'undefined');
+
+//nav
+	$("#largeLogo").one('load',function(){						//when the image loads do this
+		$(setUpStaticLocationOfSticky(false)).waypoint(function(){ 	//setUpStaticLocationOfSticky returns an emement
+			$("#sticky_navigation").toggleClass("nav_fixed");
+			$(".squareLogoHide").toggleClass("squareLogo");
+		})
+	}).each(function() {
+		if(this.complete) $(this).load();
+	}).error(function(){
+		$(setUpStaticLocationOfSticky(72)).waypoint(function(){ 	//we give an argument of a potential hight
+			$("#sticky_navigation").toggleClass("nav_fixed");
+			$(".squareLogoHide").toggleClass("squareLogo");
+		})
+	});
+	addEvent("aboutLink","about");
+	addEvent("serviceLink","services");
+	addEvent("clientsLink","clients");
+	addEvent("ourWorkLink","work");
+	addEvent("contactLink","contact");
+	$("#ourWorkLink").click(function(){
+		Works.backToMenue();
+	})
+
+//Quotes
+	var fadingElement = [
+		new FadeingObject("openingQuote"),
+		new FadeingObject("optimismQuote"),
+		new FadeingObject("collaboQuote")
+	];
+	for(var a = 0; a < fadingElement.length; ++a){
+		fadingElement[a].makeFade(scrollFromTop,windowHeight);
+	}
+
+//services
+	var ServiceButtons = new Buttons(["basicService","serviceLink","branding","brandingButton","socMed","socMedButton","research","researchButton"]);
+
+//work
+	var slideOptions = {
+		"mainContainer":"mainContainer",
+		"leftContainer": "leftContainer",
+		"rightContainer":"rightContainer",
+		"loadTo":"rightContainer",
+		"pagesToLoad":[
+			{"id":"patch","link":"work/patch.html"},
+			{"id":"antica","link":"work/antica.html"},
+			{"id":"singhampton","link":"work/singhampton.html"},
+			{"id":"patagonia","link":"work/patagonia.html"}
+		]
+	};
+	var Works = new Slide(slideOptions);
+
+//background
+	//videos
+		var videos = [
+			{"range":400,"parent":document.getElementById("openingQuote"),"tag":"remove","mp4":[
+				{type: "video/mp4", src: "http://192.168.100.107/videos/Lightning/Lightning.mp4"},
+				{type: "video/webm", src: "http://192.168.100.107/videos/Lightning/Lightning.webm"},
+				{type: "video/ogv", src: "http://192.168.100.107/videos/Lightning/Lightning.ogv"}
+			]},
+			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
+			{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
+			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
+			{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
+				{type: "video/mp4", src: "http://192.168.100.107/videos/River/River.mp4"},
+				{type: "video/webm", src: "http://192.168.100.107/videos/River/River.webm"},
+				{type: "video/ogv", src: "http://192.168.100.107/videos/River/River.ogv"}
+			]},
+			{"range":400,"parent":document.getElementById("collaboQuote"),"img":4},
+			{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","mp4":[
+				{type: "video/mp4", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.mp4"},
+				{type: "video/webm", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.webm"},
+				{type: "video/ogv", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.ogv"}
+			]}
+		];
+		determinHightsForVids();
+		var currentVid = 0;
+		var videoContainer = document.getElementById("vid_1");
+		var theVideo = _V_("vid_1",{"loop": "true","autoplay": true,"controls": false});
+		theVideo.ready(function(){
+			theVideo.src(videos[0]["mp4"]);
+			theVideo.play();
+			theVideo.volume(0);
+		});
+
+	//images
+		var imageContainer = document.getElementById("bkStrechImage");
+		var images = $(imageContainer).backstretch([
+			'img/BK1.jpg',
+			'img/BK2.jpg',
+			'img/BK3.jpg',
+			'img/BK4.jpg'
+		], {fade: 500}).data('backstretch').pause();
+		imageContainer.style.opacity = 0;
+
+	var transitioning = false;
+
+</script>
 
 <script type="text/javascript">
   // (function() {
