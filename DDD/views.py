@@ -1,9 +1,52 @@
 from django.shortcuts import render_to_response, get_object_or_404
+from DDD.models import Category
 # from  ALSO.models import Project,Category,Page
 #from ALSO.models import ImageNode, TextNode, Category ,Article, InstaPost, Post, Day
 def home(request):
 	print "yep"
 	return render_to_response('index.html',{"nothing":"nothing"})
+
+def basic(request):
+	categories = Category.objects.all()
+	out = {};
+	for cat in categories:
+		catObj = {"title":cat.title,"slug":cat.slug}
+		catObj.update(getImages(cat.mediaField.all()))
+		catObj.update(getText(cat.textFields.all()))
+		catObj.update(checkBk(cat))
+
+		out.update({cat.title:catObj})
+	return render_to_response("basic.html",{"categories":out})
+
+
+##check if there is bk, return it if there is
+def checkBk(obj):
+	if obj.bkImage:
+		return ({"bkImage":obj.bkImage})
+	if obj.bkVideo:
+		videos = []
+		for vid in obj.bkVideo.videos.all():
+			videos.append({"type":vid.fileType,"name":vid.title})
+		return ({"bkVideo":videos})
+	return {"":""}
+
+##take a list of texts and return a json of them
+def getText(listIn):
+	textList = []
+	for text in listIn:
+		textObj = {"type":text.textField,"location":text.title}
+		textObj.update(checkBk(text))
+		textList.append(textObj)
+	return ({"text":textList})
+
+##take a list of images and return a json of them
+def getImages(listIn):
+	mediaList = []
+	for media in listIn:
+		mediaObj = {media.fileType:"type","type":media.fileType,"location":media.title}
+		mediaList.append(mediaObj)
+	return ({"media":mediaList})
+
 # import requests
 # import json
 # from datetime import datetime
