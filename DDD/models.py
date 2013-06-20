@@ -45,13 +45,39 @@ class TextNode(models.Model):
 	def __unicode__(self):
 		return self.title
 
+class Page(models.Model):
+	pageTypes = (
+		("text","text"),
+		("singleImage","singleImage"),
+		("fourImage","fourImage"),
+		("sixImage","sixImage"),
+		("imageWText","imageWText")
+	)
+	title = models.CharField(max_length=600)
+	textFields = models.ManyToManyField(TextNode,blank=True,related_name="texts+")
+	mediaField = models.ManyToManyField(MediaNode,blank=True,related_name="images+")
+	videoURL = models.URLField(max_length=800, blank=True)
+	pageType = models.CharField(max_length=30, choices=pageTypes)
+	video = models.ForeignKey(VideoNode,blank=True,null=True,related_name="videoPage+")
+	slug = models.SlugField(blank=True)
+
+	def save(self,*args, **kwargs):
+		self.slug = slugify(self.title)
+		super(Page, self).save(*args, **kwargs)
+
+
+	def __unicode__(self):
+		return self.title
+
 class Article(models.Model):
 	title = models.CharField(max_length=600)
+	pages = models.ManyToManyField(Page,blank=True,related_name="pages+")
 	textFields = models.ManyToManyField(TextNode,blank=True,related_name="textFields+")
 	mediaField = models.ManyToManyField(MediaNode,blank=True,related_name="imageFields+")
 	videoURL = models.URLField(max_length=800, blank=True)
 	createdDate = models.DateField(auto_now=True)
 	slug = models.SlugField(blank=True)
+	description = models.ForeignKey(TextNode,blank=True,null=True,related_name="textDescription+")
 
 	def save(self,*args, **kwargs):
 		self.slug = slugify(self.title)

@@ -5,6 +5,12 @@
 	</style>
 </head>
 <body>
+	{{categories.Work}}
+
+
+	{{categories.Clients}}
+
+
 	{%with clients=categories.Clients%}
 		<h3>Clients</h3>
 		{% for media in clients.media%}
@@ -47,5 +53,35 @@
 	<br>
 
 	{{categories.Services}}
+
+	<div class="royalSlider rsDefault">
+		<div class="rsContent">
+			Put any HTML content here
+		</div>
+
+		<a class="rsSlide" data-rsVideo="https://vimeo.com/44878206" href="http://b.vimeocdn.com/ts/311/891/311891198_640.jpg">
+			<div class="rsTmb">
+				<h5>Dubstep Dispute</h5>
+				<p>by Fluxel Media</p>
+			</div>
+		</a>
+		<a class="rsContent" href="http://localhost:8000/projects/patch/images/"></a>
+	</div>
+
+	<link rel="stylesheet" href="static/css/royalslider.css">
+	<link rel="stylesheet" href="static/css/rs-default.css">
+	<script src='static/js/jquery.min.js'></script>
+	<script src="static/js/jquery.royalslider.min.js"></script>
+
+	<script>
+	jQuery(document).ready(function($) {
+		$(".royalSlider").royalSlider({
+			// options go here
+			// as an example, enable keyboard arrows nav
+			keyboardNavEnabled: true
+		});
+	});
+	</script>
+
 </body>
 </html>

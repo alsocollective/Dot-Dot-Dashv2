@@ -13,11 +13,59 @@ def basic(request):
 		catObj = {"title":cat.title,"slug":cat.slug}
 		catObj.update(getImages(cat.mediaField.all()))
 		catObj.update(getText(cat.textFields.all()))
+		catObj.update(getArticle(cat.articleFields.all()))
 		catObj.update(checkBk(cat))
 
 		out.update({cat.title:catObj})
 	return render_to_response("basic.html",{"categories":out})
 
+
+def projects(request,project=None,page=None):
+	if(project == None or page == None):
+		return render_to_response("basic.html",{"none":"data"})
+
+	work = Category.objects.filter(slug = "work")[0]
+
+	article = work.articleFields.filter(slug = project)
+	if(len(article) <= 0):
+		return render_to_response("basic.html",{"none":"data"})
+
+	pages = article[0].pages.filter(slug = page)
+	if(len(pages) <= 0):
+		return render_to_response("basic.html",{"none":"data"})
+	pages = pages[0]
+
+	print pages.pageType
+	pageObj = {"title":pages.title}
+	pageType = pages.pageType;
+
+	if(pageType == "imageWText"):
+		pageObj.update(getText(pages.textFields.all()))
+	if(pageType == "fourImage" or pageType == "singleImage"):
+		pageObj.update(getImages(pages.mediaField.all()))
+
+	return render_to_response("%s.html"%pageType,{"project":article,"content":pageObj})
+
+
+
+
+
+
+#with a list of Articles, itterate and return an array of pages
+def getArticle(listIn):
+	if(listIn):
+		articles = []
+		for article in listIn:
+			artObj = {"title":article.title}
+			artObj.update(getPages(article.pages))
+			articles.append(artObj)
+		return {"articles":articles}
+
+	return {"":""}
+
+#with an article, return all of it;s pages With relevant content
+def getPages(listIn):
+	return {"":""}
 
 ##check if there is bk, return it if there is
 def checkBk(obj):
