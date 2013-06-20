@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	{%with clients=categories.Clients%}
+		<h3>Clients</h3>
+		{% for media in clients.media%}
+			<img src="/static/img/uploaded/{{media.location}}">
+		{%endfor%}
+		{% if clients.bkImage %}
+			<img src="/static/img/uploaded/{{clients.bkImage}}">
+		{% endif %}
+	{%endwith%}
+	<br>
+	{%with about=categories.About%}
+		{% for text in about.text%}
+			<h1>{{text.location}}</h1>
+			<p>{{text.type|safe}}</p>
+		{%endfor%}
+		{% if about.bkImage %}
+			<img src="/static/img/uploaded/{{about.bkImage}}">
+		{% endif %}
+	{%endwith%}
+	<br>
+	{%with quotes=categories.Quote%}
+		{% for text in quotes.text%}
+			<h1>{{text.location}}</h1>
+			<p>{{text.type|safe}}</p>
+			{% if text.bkImage %}
+				<img src="/static/img/uploaded/{{text.bkImage}}">
+			{% endif %}
+			{% if text.bkVideo %}
+				{% for vid in text.bkVideo%}
+					<video width="100px" height="100px" src="/static/img/uploaded/{{vid.name}}">
+					</video>
+				{%endfor%}
+
+			{% endif %}
+		{%endfor%}
+		{% if clients.bkImage %}
+			<img src="/static/img/uploaded/{{quotes.bkImage}}">
+		{% endif %}
+	{%endwith%}
+	<br>
+
+	{{categories.Services}}
+</body>
+</html>
