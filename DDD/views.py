@@ -16,6 +16,8 @@ def basic(request):
 		catObj.update(getArticle(cat.articleFields.all()))
 		catObj.update(checkBk(cat))
 
+		#catObj.update(projectList(cat.pages.all()))
+
 		out.update({cat.title:catObj})
 	return render_to_response("basic.html",{"categories":out})
 
@@ -47,7 +49,9 @@ def projects(request,project=None,page=None):
 	return render_to_response("%s.html"%pageType,{"project":article,"content":pageObj})
 
 
-
+# def projectList(listOfProjects):
+# 	print listOfProjects
+# 	return {"":""}
 
 
 
@@ -56,15 +60,20 @@ def getArticle(listIn):
 	if(listIn):
 		articles = []
 		for article in listIn:
-			artObj = {"title":article.title}
-			artObj.update(getPages(article.pages))
+			artObj = {"subHead":article.description.title, "description":article.description.textField, "title":article.title,"slug":article.slug,"text":getText(article.textFields.all())}
+			artObj.update(getPages(article.pages.all()))
 			articles.append(artObj)
 		return {"articles":articles}
-
 	return {"":""}
 
 #with an article, return all of it;s pages With relevant content
 def getPages(listIn):
+	if(listIn):
+		pages = []
+		for page in listIn:
+			pageObj = {"slug":page.slug,"type":page.pageType}
+			pages.append(pageObj)
+		return {"pages":pages}
 	return {"":""}
 
 ##check if there is bk, return it if there is

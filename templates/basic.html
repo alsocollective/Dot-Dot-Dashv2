@@ -5,82 +5,148 @@
 	</style>
 </head>
 <body>
-	{{categories.Work}}
 
 
-	{{categories.Clients}}
+<!-- about -->
+{%with about=categories.About%}
+	{% for text in about.text%}
+		<h1>{{text.location}}</h1>
+		<p>{{text.type|safe}}</p>
+	{%endfor%}
+	{% if about.bkImage %}
+		<img src="/static/img/uploaded/{{about.bkImage}}">
+	{% endif %}
+{%endwith%}
 
 
-	{%with clients=categories.Clients%}
-		<h3>Clients</h3>
-		{% for media in clients.media%}
-			<img src="/static/img/uploaded/{{media.location}}">
-		{%endfor%}
-		{% if clients.bkImage %}
-			<img src="/static/img/uploaded/{{clients.bkImage}}">
+<!-- clients -->
+{%with clients=categories.Clients%}
+	<h3>Clients</h3>
+	{% for media in clients.media%}
+		<img src="/static/img/uploaded/{{media.location}}">
+	{%endfor%}
+	{% if clients.bkImage %}
+		<img src="/static/img/uploaded/{{clients.bkImage}}">
+	{% endif %}
+{%endwith%}
+
+<!-- services -->
+{%with quotes=categories.Quote%}
+	{% for text in quotes.text%}
+		<h1>{{text.location}}</h1>
+		<p>{{text.type|safe}}</p>
+		{% if text.bkImage %}
+			<img src="/static/img/uploaded/{{text.bkImage}}">
 		{% endif %}
-	{%endwith%}
-	<br>
-	{%with about=categories.About%}
-		{% for text in about.text%}
-			<h1>{{text.location}}</h1>
-			<p>{{text.type|safe}}</p>
-		{%endfor%}
-		{% if about.bkImage %}
-			<img src="/static/img/uploaded/{{about.bkImage}}">
+		{% if text.bkVideo %}
+			{% for vid in text.bkVideo%}
+				<video width="100px" height="100px" src="/static/img/uploaded/{{vid.name}}">
+				</video>
+			{%endfor%}
+
 		{% endif %}
-	{%endwith%}
-	<br>
-	{%with quotes=categories.Quote%}
-		{% for text in quotes.text%}
-			<h1>{{text.location}}</h1>
-			<p>{{text.type|safe}}</p>
-			{% if text.bkImage %}
-				<img src="/static/img/uploaded/{{text.bkImage}}">
-			{% endif %}
-			{% if text.bkVideo %}
-				{% for vid in text.bkVideo%}
-					<video width="100px" height="100px" src="/static/img/uploaded/{{vid.name}}">
-					</video>
-				{%endfor%}
+	{%endfor%}
+	{% if clients.bkImage %}
+		<img src="/static/img/uploaded/{{quotes.bkImage}}">
+	{% endif %}
+{%endwith%}
 
-			{% endif %}
+
+
+<!-- work -->
+{%with work=categories.Work%}
+	<script type="text/javascript">
+	var works = {
+		{%for article in work.articles%}
+
+		"{{article.title}}":{
+			"slug":"{{article.slug}}",
+			"Links":[
+			{%for page in article.pages%}
+				"projects/{{article.slug}}/{{page.slug}}/",
+			{%endfor%}
+			]
+		},
 		{%endfor%}
-		{% if clients.bkImage %}
-			<img src="/static/img/uploaded/{{quotes.bkImage}}">
-		{% endif %}
-	{%endwith%}
-	<br>
+	}
+	console.log(works);
+	</script>
+	{%for article in work.articles%}
+		<p>{{article.subHead}}</p>
+		<p>{{article.description}}</p>
+		<input type="button" class="onlyButton" value="{{article.title}}">
+	{%endfor%}
 
-	{{categories.Services}}
+{%endwith%}
 
-	<div class="royalSlider rsDefault">
-		<div class="rsContent">
-			Put any HTML content here
-		</div>
 
-		<a class="rsSlide" data-rsVideo="https://vimeo.com/44878206" href="http://b.vimeocdn.com/ts/311/891/311891198_640.jpg">
-			<div class="rsTmb">
-				<h5>Dubstep Dispute</h5>
-				<p>by Fluxel Media</p>
-			</div>
-		</a>
-		<a class="rsContent" href="http://localhost:8000/projects/patch/images/"></a>
-	</div>
+
+
 
 	<link rel="stylesheet" href="static/css/royalslider.css">
 	<link rel="stylesheet" href="static/css/rs-default.css">
+
 	<script src='static/js/jquery.min.js'></script>
 	<script src="static/js/jquery.royalslider.min.js"></script>
 
 	<script>
-	jQuery(document).ready(function($) {
-		$(".royalSlider").royalSlider({
-			// options go here
-			// as an example, enable keyboard arrows nav
-			keyboardNavEnabled: true
+	$(".onlyButton").click(function(){
+		var workToShow = works[this.value];
+		console.log(workToShow);
+
+		var rsSlider = document.createElement("div");
+		rsSlider.style.left = "100%";
+		rsSlider.setAttribute("class","royalSlider");
+		document.body.appendChild(rsSlider);
+
+		var backButton = document.createElement("a");
+		backButton.innerHTML = "Back";
+		backButton.style.left = "105%";
+		backButton.id = "rsbackButton";
+		$(backButton).click(function(){
+			rsSlider.style.left = "100%";
+			backButton.style.left = "105%";
+			setTimeout(function(){
+				rsSlider.parentNode.removeChild(rsSlider);
+				backButton.parentNode.removeChild(backButton);
+				console.log("back");
+			},1000);
 		});
+		document.body.appendChild(backButton);
+
+		rsSlider.innerHTML = "";
+		var newElement = document.createElement("div");
+		newElement.setAttribute("class","rsContent");
+
+		var numberofslides = workToShow["Links"].length;
+		for(var a = 0; a < numberofslides; ++a){
+			var temp = newElement.cloneNode(true)
+			temp.innerHTML += "  " + a;
+			rsSlider.appendChild(temp);
+		}
+
+		var rsSliderChildren = rsSlider.childNodes;
+
+		$(rsSliderChildren[0]).load(workToShow["Links"][0],function(){
+			with(rsSlider.style){
+				left = "0%";
+			}
+			backButton.style.left = "5%";
+
+			for(var a = 1; a < rsSliderChildren.length; ++a){
+				$(rsSliderChildren[a]).load(workToShow["Links"][a]);
+			}
+
+			$(".royalSlider").royalSlider({
+				// options go here
+				// as an example, enable keyboard arrows nav
+				keyboardNavEnabled: true
+			});
+		});
+
+
 	});
+
 	</script>
 
 </body>
