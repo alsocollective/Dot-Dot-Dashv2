@@ -8,3 +8,4 @@ work/img/
 video/
 img/
 *.pyc
+settings.py
