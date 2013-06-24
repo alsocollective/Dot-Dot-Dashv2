@@ -33,6 +33,9 @@
 			_V_.options.flash.swf = "http://example.com/path/to/video-js.swf"
 		</script>
 
+		<link rel="stylesheet" href="static/css/royalslider.css">
+		<link rel="stylesheet" href="static/css/rs-default.css">
+
     </head>
 <body>
 
@@ -62,81 +65,28 @@
 
 <div id="firstPadding"></div>
 <section class="quoteSection">
-	<p class="quote" id="openingQuote">
-		Creative Content + <br>
-		Engagement Strategies <br>
-		That Make Your Brand Relevant
+	{%with quote=categories.Quote.text%}
+	<p class="quote" id="{{quote.0.location}}">
+			{{quote.0.type}}
 	</p>
+	{%endwith%}
 </section>
 <section id="about">
 	<div id="containerAbout">
-		<h1>About Us</h1>
-		<div id="twoColoumContent">
-DOT DOT DASH is an independent marketing firm specializing
-in the development of handcrafted content and
-communications. Our practice leans towards the digital
-and social landscapes, but extends into fully integrated
-services. With scalable production capacity, we focus on
-busine.sses and organizations that stand for something and
-who want to use communication for good. We only work with
-great and virtuous organizations to ensure that our clients
-are always in good company. We inspire action through
-love, story, conversation and the building of communities.
-We believe more in long-term commitments to communications
-with customers and less in ‘one off’ campaigns. OUr goal is
-to foster a series of strategic conversations that keep our
-clients’ brands top of mind. We value sustainable growth
-over instant solutions. We believe in using technology
-to help brands build cultural relevance. We partner with
-visionary clients to build strategies that instigate
-dialogue and experience. We create work that people
-want to know about and be a part of. We create things
-that are optimistic, inclusive, valuable and relevant.
-We’re as tired of today’s over-saturated media landscape
-and inauthentic brand messaging as you are. Like many,
-we got tired of being sold crap that we didn’t need or
-want. So we decided to do something about it by creating
-a new business hardwired to work in a new economy with
-a new consumner. We encourage our clients to be honest,
-progressive and transparent and help find ways for the
-market to reward them for being this way. We also encourage
-our clients to be smart, strategic and original. We do
-this because we believe in these values ourselves and
-we believe the consumer deserves better than what they
-are getting today. We care about nature, connnunity and
-culture and we care about integrity and imagination.
-		</div>
-	</div>
-	<div id="containerAbout">
-		<h1>Our Process</h1>
-		<div id="twoColoumContent">
-We don’t have any formal training in mark·etinq and it
-shows. We are nondoqmatic and generally don’t care about
-existing rules or protocols. We blur the lines between
-account and creative personnel and encourage our teams to
-get completely immersed in solving business problems. We
-speak to our clients in normal language rather than jargon.
-We treat our clients, and their customers, as humans,
-not as metrics or demogiaphics. What we do care about
-is success. We want to keep our campaigns and our jobs
-interesting and imaginative. We did not set out to compete
-on level ground with other advertising agencies, so we use
-asymmetrical tactics to get results, often big one’s. We
-believe in ourselves and we believe in our clients. It shows
-in our work. If you are a great organization or cornpany,
-and want to do something oriqinal, please give us a call.
-If you want to roll out another same-old seasonal campaign
-around a mundane and tired product, differentiated from
-its competition only by branding, p1ease call someone else.
-		</div>
+		{%with about=categories.About%}
+			{% for text in about.text%}
+				<h1>{{text.location}}</h1>
+				<div id="twoColoumContent">{{text.type|safe}}</div>
+			{%endfor%}
+		{%endwith%}
 	</div>
 </section>
 <section class="quoteSection">
-	<p class="quote" id="optimismQuote">
-We’re optimistic. We’re into collaboration.<br>
-We’re into being relevant. We’re happy you found us.<br>
-If you feel the same, scroll on.
+	{%with quote=categories.Quote.text%}
+	<p class="quote" id="{{quote.1.location}}">
+			{{quote.1.type}}
 	</p>
+	{%endwith%}
 </section>
 <section id="services">
 	<div id="contentServices">
@@ -205,23 +155,11 @@ If you feel the same, scroll on.
 </section>
 <section id="clients">
 	<div id="clientContainer">
-		<div class="client">
-			<img src="/../static/img/logo/pan.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/antica.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/canoe north.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/patch.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/david.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/earthday.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/earnes.jpg">
-		</div><div class="client">
-			<img src="/../static/img/logo/chefs.jpg">
-		</div>
+		{%with clients=categories.Clients%}
+			{% for media in clients.media%}<div class="client">
+				<img src="/static/img/uploaded/{{media.location}}">
+				</div>{%endfor%}
+		{%endwith%}
 	</div>
 </section>
 <section id="work">
@@ -326,6 +264,15 @@ If you feel the same, scroll on.
 	})
 
 //Quotes
+	// var selectElement = $(".quoteSection");
+	// var fadingElement = [];
+	// console.log(selectElement);
+	// selectElement.each(function(index){
+	// 	console.log
+	// 	fadingElement.push(new FadeingObject($(fadingElement[index]).children()[0]));
+	// 	fadingElement[index].makeFade(scrollFromTop,windowHeight);
+	// });
+	// console.log(fadingElement);
 	var fadingElement = [
 		new FadeingObject("openingQuote"),
 		new FadeingObject("optimismQuote"),
@@ -357,23 +304,23 @@ If you feel the same, scroll on.
 	//videos
 		var videos = [
 			{"range":400,"parent":document.getElementById("openingQuote"),"tag":"remove","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.107/videos/Lightning/Lightning.mp4"},
-				{type: "video/webm", src: "http://192.168.100.107/videos/Lightning/Lightning.webm"},
-				{type: "video/ogv", src: "http://192.168.100.107/videos/Lightning/Lightning.ogv"}
+				{type: "video/mp4", src: "http://192.168.100.105/videos/Lightning/Lightning.mp4"},
+				{type: "video/webm", src: "http://192.168.100.105/videos/Lightning/Lightning.webm"},
+				{type: "video/ogv", src: "http://192.168.100.105/videos/Lightning/Lightning.ogv"}
 			]},
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
 			{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
 			{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.107/videos/River/River.mp4"},
-				{type: "video/webm", src: "http://192.168.100.107/videos/River/River.webm"},
-				{type: "video/ogv", src: "http://192.168.100.107/videos/River/River.ogv"}
+				{type: "video/mp4", src: "http://192.168.100.105/videos/River/River.mp4"},
+				{type: "video/webm", src: "http://192.168.100.105/videos/River/River.webm"},
+				{type: "video/ogv", src: "http://192.168.100.105/videos/River/River.ogv"}
 			]},
 			{"range":400,"parent":document.getElementById("collaboQuote"),"img":4},
 			{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.mp4"},
-				{type: "video/webm", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.webm"},
-				{type: "video/ogv", src: "http://192.168.100.107/videos/Waterfall/Waterfall1.ogv"}
+				{type: "video/mp4", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.mp4"},
+				{type: "video/webm", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.webm"},
+				{type: "video/ogv", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.ogv"}
 			]}
 		];
 		determinHightsForVids();
@@ -399,6 +346,64 @@ If you feel the same, scroll on.
 	var transitioning = false;
 
 </script>
+
+<script>
+	$(".onlyButton").click(function(){
+		var workToShow = works[this.value];
+
+		var rsSlider = document.createElement("div");
+		rsSlider.style.left = "100%";
+		rsSlider.setAttribute("class","royalSlider");
+		document.body.appendChild(rsSlider);
+
+		var backButton = document.createElement("a");
+		backButton.innerHTML = "Back";
+		backButton.style.left = "105%";
+		backButton.id = "rsbackButton";
+		$(backButton).click(function(){
+			rsSlider.style.left = "100%";
+			backButton.style.left = "105%";
+			setTimeout(function(){
+				rsSlider.parentNode.removeChild(rsSlider);
+				backButton.parentNode.removeChild(backButton);
+			},1000);
+		});
+		document.body.appendChild(backButton);
+
+		rsSlider.innerHTML = "";
+		var newElement = document.createElement("div");
+		newElement.setAttribute("class","rsContent");
+
+		var numberofslides = workToShow["Links"].length;
+		for(var a = 0; a < numberofslides; ++a){
+			var temp = newElement.cloneNode(true)
+			temp.innerHTML += "  " + a;
+			rsSlider.appendChild(temp);
+		}
+
+		var rsSliderChildren = rsSlider.childNodes;
+
+		$(rsSliderChildren[0]).load(workToShow["Links"][0],function(){
+			with(rsSlider.style){
+				left = "0%";
+			}
+			backButton.style.left = "5%";
+
+			for(var a = 1; a < rsSliderChildren.length; ++a){
+				$(rsSliderChildren[a]).load(workToShow["Links"][a]);
+			}
+
+			$(".royalSlider").royalSlider({
+				// options go here
+				// as an example, enable keyboard arrows nav
+				keyboardNavEnabled: true
+			});
+		});
+
+
+	});
+
+	</script>
 
 <script type="text/javascript">
   // (function() {

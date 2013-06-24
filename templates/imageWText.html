@@ -1,1 +1,9 @@
-{{content}}
+
+
+<img style="height:100px;" src="/static/img/uploaded/{{content.media.0.location}}">
+
+<p>{{content.text.0.type}}</p>
+
+{%if content.vidLink%}
+	<iframe src="{{content.vidLink}}" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+{%endif%}

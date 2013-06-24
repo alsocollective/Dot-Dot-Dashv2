@@ -10,17 +10,25 @@ class MediaNode(models.Model):
 		slug = slugify(fname)
 		instance.title = '%s.%s' % (slug, extension)
 		return 'static/img/uploaded/%s.%s' % (slug, extension)
-
 	fileType = models.CharField(max_length=100,blank=True)
 	location = models.FileField(upload_to=slugify_filename)
 	title = models.CharField(max_length=600,blank=True)#,default=titleName)
+	slug = models.CharField(max_length=500,blank=True)
 
 	def save(self, *args, **kwargs):
 		title = os.path.basename(self.location.name)
 		self.title = title
 		fname, dot, extension = title.rpartition('.')
+		self.slug = slugify(title)
 		self.fileType = extension
 		super(MediaNode, self).save(*args, **kwargs)
+
+
+	def admin_image(self):
+		if(self.fileType == "jpg" or self.fileType == "png" or self.fileType == "tiff" or self.fileType == "gif"):
+			return '<img style="width:200px;height:auto;" src="/static/img/uploaded/%s"/>' % self.title
+		return "not an Image"
+	admin_image.allow_tags = True
 
 	def __unicode__(self):
 		return self.title
