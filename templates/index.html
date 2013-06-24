@@ -33,9 +33,12 @@
 			_V_.options.flash.swf = "http://example.com/path/to/video-js.swf"
 		</script>
 
-		<link rel="stylesheet" href="static/css/royalslider.css">
-		<link rel="stylesheet" href="static/css/rs-default.css">
+		<link rel="stylesheet" href="/../static/css/royalslider.css">
+		<link rel="stylesheet" href="/../static/css/rs-default.css">
 
+		<script type="text/javascript">
+		//the background collector
+		</script>
     </head>
 <body>
 
@@ -44,7 +47,6 @@
 <![endif]-->
 <nav id="sticky_navigation"><!--  once it gets down to this area it gains the class nav_fixed -->
 	<img id="largeLogo" src="/../static/img/logo.png">
-	<div class="squareLogoHide"><img id="smallLogo" src="/../static/img/logo.png"></div>
 
 	<ul id="stickPoint">
 		<li id="aboutLink"><a href="#about">About</a></li>
@@ -56,163 +58,105 @@
 </nav>
 
 
-<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="/../static/video/Lightning/Lightning.jpg" data-setup='{ "controls": false, "autoplay": true, "preload": "auto", "loop": true}'>
-	</video>
-</div>
-<div class="bkImage" id="bkStrechImage">
-
-</div>
+<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="/../static/video/Lightning/Lightning.jpg" data-setup='{ "controls": false, "autoplay": true, "preload": "auto", "loop": true}'></video></div>
+<div class="bkImage" id="bkStrechImage"></div>
 
 <div id="firstPadding"></div>
-<section class="quoteSection">
+<section class="quote">
 	{%with quote=categories.Quote.text%}
-	<p class="quote" id="{{quote.0.location}}">
+	<p id="{{quote.0.location}}">
 			{{quote.0.type}}
 	</p>
 	{%endwith%}
 </section>
 <section id="about">
+{%with about=categories.About%}
 	<div id="containerAbout">
-		{%with about=categories.About%}
-			{% for text in about.text%}
-				<h1>{{text.location}}</h1>
-				<div id="twoColoumContent">{{text.type|safe}}</div>
-			{%endfor%}
-		{%endwith%}
+		{% for text in about.text%}
+			<h1>{{text.location}}</h1>
+			<div id="twoColoumContent">{{text.type|safe}}</div>
+		{%endfor%}
 	</div>
+{%endwith%}
 </section>
-<section class="quoteSection">
+<section class="quote">
 	{%with quote=categories.Quote.text%}
-	<p class="quote" id="{{quote.1.location}}">
+	<p id="{{quote.1.location}}">
 			{{quote.1.type}}
 	</p>
 	{%endwith%}
 </section>
 <section id="services">
+	{%with services=categories.Services.articles.0%}
+
 	<div id="contentServices">
 		<div id="basicService" class="servicCat">
-			<h1>Services</h1>
+			<h1>{{services.subHead}}</h1>
 			<p>
-				The consumer is our hero, so we put them in the centre
-				of everything we do. We also want our clients to feel
-				the love, so we offer tailored services that help
-				bridge communications gaps of all sizes while deliveriug
-				re:sults. We keep our skills sharp, and our overhead
-				low and pass on the benefits through our services.
+				{{services.description}}
 			</p>
 		</div>
-		<div id="branding" class="servicCat">
-			<h1>Branding</h1>
-			<p>
-				The consumer is our hero, so we put them in the centre
-				of everything we do. We also want our clients to feel
-				the love, so we offer tailored services that help
-				bridge communications gaps of all sizes while deliveriug
-				re:sults. We keep our skills sharp, and our overhead
-				low and pass on the benefits through our services.
-			</p>
+		{%for section in services.text.text%}
+		<div id="{{section.slug}}" class="servicCat">
+			<h1>{{section.location}}</h1>
+			<p>{{section.type}}</p>
 		</div>
-		<div id="socMed" class="servicCat">
-			<h1>
-				Social Media
-				Strategy +
-				Planning
-			</h1>
-			<p>
-				The consumer is our hero, so we put them in the centre
-				of everything we do. We also want our clients to feel
-				the love, so we offer tailored services that help
-				bridge communications gaps of all sizes while deliveriug
-				re:sults. We keep our skills sharp, and our overhead
-				low and pass on the benefits through our services.
-			</p>
-		</div>
-		<div id="research" class="servicCat">
-			<h1>Research</h1>
-			<p>
-				The consumer is our hero, so we put them in the centre
-				of everything we do. We also want our clients to feel
-				the love, so we offer tailored services that help
-				bridge communications gaps of all sizes while deliveriug
-				re:sults. We keep our skills sharp, and our overhead
-				low and pass on the benefits through our services.
-			</p>
-		</div>
+		{%endfor%}
 	</div>
-	<div id="cirlces"><span class="block"><a class="serviceBlock" href="#branding" id="brandingButton">
-			<div class="serviceCircle"><img src="/../static/img/BK1.jpg"></div>
-		</a><a class="serviceBlock" href="#socMed" id="socMedButton">
-			<div class="serviceCircle"><img src="/../static/img/BK2.jpg"></div>
-		</a><a class="serviceBlock" href="#research" id="researchButton">
-			<div class="serviceCircle"><img src="/../static/img/BK3.jpg"></div>
-		</a></span><span class="block"><a class="serviceBlock">
-			<div class="serviceCircle"><img src="/../static/img/BK3.jpg"></div>
-		</a><a class="serviceBlock">
-			<div class="serviceCircle"><img src="/../static/img/BK3.jpg"></div>
-		</a><a class="serviceBlock">
-			<div class="serviceCircle"><img src="/../static/img/BK3.jpg"></div>
-		</a></span></div>
+	<div id="cirlces"><span class="block">{%for section in services.text.text%}<a class="serviceBlock" href="#{{section.slug}}" id="{{section.slug}}Button">
+			<div class="serviceCircle"><img src="/../static/uploaded/{{section.bkImg}}"></div>
+		</a>{%endfor%}</div>
+	{%endwith%}
 </section>
 <section id="clients">
 	<div id="clientContainer">
 		{%with clients=categories.Clients%}
 			{% for media in clients.media%}<div class="client">
-				<img src="/static/img/uploaded/{{media.location}}">
+				<img src="/static/uploaded/{{media.location}}">
 				</div>{%endfor%}
 		{%endwith%}
 	</div>
 </section>
 <section id="work">
+{%with work=categories.Work%}
+	<script type="text/javascript">
+	var works = {
+		{%for article in work.articles%}
 
+		"{{article.title}}":{
+			"slug":"{{article.slug}}",
+			"Links":[
+			{%for page in article.pages%}
+				"projects/{{article.slug}}/{{page.slug}}/",
+			{%endfor%}
+			]
+		},
+		{%endfor%}
+	}
+	</script>
 	<div id="mainContainer"><div id="leftContainer">
 			<div id="workTopPadding"></div>
-			<div id="workButtons"><a href="#patch" id="patch" class="project">
-				<h2>PATCH</h2>
-				<h3>Product Launch Strategy and Marketting</h3>
+			<div id="workButtons">{%for article in work.articles%}<a href="#" id="{{article.title}}" class="project">
+				<h2>{{article.title}}</h2>
+				<h3>{{article.subHead}}</h3>
+				<input type="button" class="onlyButton" value="{{article.title}}">
 				<p>
-					The consumer is our hero, so we put them in the centre
-					of everything we do. We also want our clients to feel
-					the love, so we offer tailored services that help.
+					{{article.description}}
 				</p>
-				</a><a href="#antica" id="antica" class="project">
-				<h2>Antica</h2>
-				<h3>Brand Redesign</h3>
-				<p>
-					The consumer is our hero, so we put them in the centre
-					of everything we do. We also want our clients to feel
-					the love, so we offer tailored services that help.
-				</p>
-				</a><a href="#singhampton" id="singhampton" class="project">
-				<h2>The Singhampton project</h2>
-				<h3>Media Outreach and Event Promotion</h3>
-				<p>
-					The consumer is our hero, so we put them in the centre
-					of everything we do. We also want our clients to feel
-					the love, so we offer tailored services that help.
-				</p>
-				</a><a href="#patagonia" id="patagonia" class="project">
-				<h2>Patagonia</h2>
-				<h3>Strategy, Social Engagement, Media Relations</h3>
-				<p>
-					The consumer is our hero, so we put them in the centre
-					of everything we do. We also want our clients to feel
-					the love, so we offer tailored services that help.
-				</p>
-				</a>
+				</a>{%endfor%}
 			</div>
 		</div><div id="rightContainer">
-
 		</div>
 	</div>
-
+{%endwith%}
 </section>
 
-<section class="quoteSection">
-	<p class="quote" id="collaboQuote">
-We’re optimistic. We’re into collaboration.<br>
-We’re into being relevant. We’re happy you found us.<br>
-If you feel the same, scroll on.
+<section class="quote">
+	{%with quote=categories.Quote.text%}
+	<p id="{{quote.2.location}}">
+			{{quote.2.type}}
 	</p>
+	{%endwith%}
 </section>
 
 <section id="socMedia">
@@ -220,18 +164,20 @@ If you feel the same, scroll on.
 </section>
 
 <section id="contact">
+{%with contact=categories.Contact%}
 	<div id="contactContainer">
-		<h2>EMAIL</h2>
-		<h3>COLLABORATE@DOTDOTDASH.com</h3>
-		<h2>Phone</h2>
-		<h3>416 846 2236</h3>
-		<a href="#">facebook</a> <a href="#">twitter</a>
+		{%for mean in contact.text%}
+			<h2>{{mean.location}}</h2>
+			<h3>{{mean.type}}</h3>
+		{%endfor%}
 	</div>
+{%endwith%}
 </section>
 
 <script src="/../static/js/jquery.min.js"></script>
 <script src="/../static/js/waypoints.min.js"></script>
 <script src="/../static/js/jquery.backstretch.min.js"></script>
+<script src="/../static/js/jquery.royalslider.min.js"></script>
 <script src="/../static/js/script.js"></script>
 <script type="text/javascript">
 //INITIALIZATION of everything!!
@@ -244,14 +190,12 @@ If you feel the same, scroll on.
 	$("#largeLogo").one('load',function(){						//when the image loads do this
 		$(setUpStaticLocationOfSticky(false)).waypoint(function(){ 	//setUpStaticLocationOfSticky returns an emement
 			$("#sticky_navigation").toggleClass("nav_fixed");
-			$(".squareLogoHide").toggleClass("squareLogo");
 		})
 	}).each(function() {
 		if(this.complete) $(this).load();
 	}).error(function(){
 		$(setUpStaticLocationOfSticky(72)).waypoint(function(){ 	//we give an argument of a potential hight
 			$("#sticky_navigation").toggleClass("nav_fixed");
-			$(".squareLogoHide").toggleClass("squareLogo");
 		})
 	});
 	addEvent("aboutLink","about");
@@ -259,46 +203,22 @@ If you feel the same, scroll on.
 	addEvent("clientsLink","clients");
 	addEvent("ourWorkLink","work");
 	addEvent("contactLink","contact");
-	$("#ourWorkLink").click(function(){
-		Works.backToMenue();
-	})
 
 //Quotes
-	// var selectElement = $(".quoteSection");
-	// var fadingElement = [];
-	// console.log(selectElement);
-	// selectElement.each(function(index){
-	// 	console.log
-	// 	fadingElement.push(new FadeingObject($(fadingElement[index]).children()[0]));
-	// 	fadingElement[index].makeFade(scrollFromTop,windowHeight);
-	// });
-	// console.log(fadingElement);
+{%with quote=categories.Quote.text%}
 	var fadingElement = [
-		new FadeingObject("openingQuote"),
-		new FadeingObject("optimismQuote"),
-		new FadeingObject("collaboQuote")
+		{%for sing in quote%}new FadeingObject("{{sing.location}}"),{%endfor%}
 	];
+{%endwith%}
 	for(var a = 0; a < fadingElement.length; ++a){
 		fadingElement[a].makeFade(scrollFromTop,windowHeight);
 	}
 
 //services
-	var ServiceButtons = new Buttons(["basicService","serviceLink","branding","brandingButton","socMed","socMedButton","research","researchButton"]);
+	{%with services=categories.Services.articles.0%}
+		var ServiceButtons = new Buttons(["basicService","serviceLink",{%for section in services.text.text%}"{{section.slug}}","{{section.slug}}Button",{%endfor%}]);
+	{%endwith%}
 
-//work
-	var slideOptions = {
-		"mainContainer":"mainContainer",
-		"leftContainer": "leftContainer",
-		"rightContainer":"rightContainer",
-		"loadTo":"rightContainer",
-		"pagesToLoad":[
-			{"id":"patch","link":"/../static/work/patch.html"},
-			{"id":"antica","link":"/../static/work/antica.html"},
-			{"id":"singhampton","link":"/../static/work/singhampton.html"},
-			{"id":"patagonia","link":"/../static/work/patagonia.html"}
-		]
-	};
-	var Works = new Slide(slideOptions);
 
 //background
 	//videos
@@ -348,8 +268,11 @@ If you feel the same, scroll on.
 </script>
 
 <script>
-	$(".onlyButton").click(function(){
-		var workToShow = works[this.value];
+//project
+//onlyButton
+	$(".project").click(function(event){
+		event.preventDefault()
+		var workToShow = works[this.id];
 
 		var rsSlider = document.createElement("div");
 		rsSlider.style.left = "100%";

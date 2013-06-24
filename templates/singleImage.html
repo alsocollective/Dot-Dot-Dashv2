@@ -1,9 +1,6 @@
 <div id="{{content.media.0.slug}}" style="width:100%; height:100%;">
-
-	<script src="/../static/js/jquery.backstretch.min.js"></script>
 	<script type="text/javascript">
 	var strech = $("#{{content.media.0.slug}}");
-	console.log(strech)
-	strech.backstretch("/static/img/uploaded/{{content.media.0.location}}");
+	strech.backstretch("/static/uploaded/{{content.media.0.location}}");
 	</script>
 </div>

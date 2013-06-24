@@ -14,15 +14,9 @@ def basic(request):
 		catObj.update(getText(cat.textFields.all()))
 		catObj.update(getArticle(cat.articleFields.all()))
 
-		print " "
-		print " "
-
 		if cat.bkVideo:
-			print cat.bkVideo
 			catObj.update(getBkVid(cat.bkVideo))
 		if cat.bkImage:
-			print cat
-			print cat.bkImage
 			catObj.update(getBkImg(cat.bkImage))
 #		catObj.update(checkBk(cat))
 
@@ -112,7 +106,7 @@ def checkBk(obj):
 def getText(listIn):
 	textList = []
 	for text in listIn:
-		textObj = {"type":text.textField,"location":text.title}
+		textObj = {"type":text.textField,"location":text.title,"slug":text.slug}
 		textObj.update(checkBk(text))
 
 		textList.append(textObj)

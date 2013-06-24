@@ -301,16 +301,11 @@ function Buttons(tags){
 			event.preventDefault();
 			hideAllBut(this);
 		});
-		// buttons[buttons.length-1].addEventListener("click", function(event){
-		// 	event.preventDefault();
-		// 	hideAllBut(this);
-		// });
 	}
 
 	var parentEl = elements[0].parentNode;
 
 	elements[0].style.display = "block";
-
 
 	var parent = buttons[1].parentNode.parentNode;
 	var absoluteParent = parent.parentNode;

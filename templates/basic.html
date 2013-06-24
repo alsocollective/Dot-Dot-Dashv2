@@ -74,7 +74,7 @@
 	{%for article in work.articles%}
 		<p>{{article.subHead}}</p>
 		<p>{{article.description}}</p>
-		<input type="button" class="onlyButton" value="{{article.title}}">
+		
 	{%endfor%}
 	<br>
 	{% for vidType in work.bkVid%}
@@ -184,7 +184,7 @@
 				left = "0%";
 			}
 			backButton.style.left = "5%";
-
+			
 			for(var a = 1; a < rsSliderChildren.length; ++a){
 				$(rsSliderChildren[a]).load(workToShow["Links"][a]);
 			}
