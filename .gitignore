@@ -7,5 +7,6 @@ old/
 work/img/
 video/
 img/
+uploaded/
 *.pyc
 settings.py

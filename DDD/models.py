@@ -26,7 +26,7 @@ class MediaNode(models.Model):
 
 	def admin_image(self):
 		if(self.fileType == "jpg" or self.fileType == "png" or self.fileType == "tiff" or self.fileType == "gif"):
-			return '<img style="width:200px;height:auto;" src="/static/img/uploaded/%s"/>' % self.title
+			return '<img style="width:200px;height:auto;" src="/static/uploaded/%s"/>' % self.title
 		return "not an Image"
 	admin_image.allow_tags = True
 
@@ -36,6 +36,8 @@ class MediaNode(models.Model):
 class VideoNode(models.Model):
 	title = models.CharField(max_length=300, blank=True)
 	videos = models.ManyToManyField(MediaNode, related_name="videos+")
+	image = models.ForeignKey(MediaNode,blank=True,null=True,related_name="imageFallBack+")
+
 	def __unicode__(self):
 		return self.title
 

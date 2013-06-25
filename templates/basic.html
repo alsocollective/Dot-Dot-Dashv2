@@ -36,7 +36,7 @@
 
 <!-- Quote 2  -->
 {%with quote=categories.Quote.text%}
-	<h1>{{quote.1.location}}</h1>
+	<h1></h1>
 	{{quote.1.type}}
 {%endwith%}
 <br>
@@ -74,7 +74,6 @@
 	{%for article in work.articles%}
 		<p>{{article.subHead}}</p>
 		<p>{{article.description}}</p>
-		
 	{%endfor%}
 	<br>
 	{% for vidType in work.bkVid%}

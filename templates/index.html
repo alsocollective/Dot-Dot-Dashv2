@@ -139,7 +139,6 @@
 			<div id="workButtons">{%for article in work.articles%}<a href="#" id="{{article.title}}" class="project">
 				<h2>{{article.title}}</h2>
 				<h3>{{article.subHead}}</h3>
-				<input type="button" class="onlyButton" value="{{article.title}}">
 				<p>
 					{{article.description}}
 				</p>
@@ -223,11 +222,20 @@
 //background
 	//videos
 		var videos = [
-			{"range":400,"parent":document.getElementById("openingQuote"),"tag":"remove","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.105/videos/Lightning/Lightning.mp4"},
-				{type: "video/webm", src: "http://192.168.100.105/videos/Lightning/Lightning.webm"},
-				{type: "video/ogv", src: "http://192.168.100.105/videos/Lightning/Lightning.ogv"}
-			]},
+			{%with quote=categories.Quote.text%}
+				{"range":400,"parent":document.getElementById("{{quote.0.location}}"),"tag":"remove","mp4":[
+				{% for vidType in quote.bkVid%}
+					{% if forloop.last %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}
+					{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},
+					{% endif %}
+				{%endfor%}
+					// {type: "video/mp4", src: "http://192.168.100.105/videos/Lightning/Lightning.mp4"},
+					// {type: "video/webm", src: "http://192.168.100.105/videos/Lightning/Lightning.webm"},
+					// {type: "video/ogv", src: "http://192.168.100.105/videos/Lightning/Lightning.ogv"}
+				]},
+			{%endwith%}
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
 			{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
@@ -273,6 +281,7 @@
 	$(".project").click(function(event){
 		event.preventDefault()
 		var workToShow = works[this.id];
+		console.log(works);
 
 		var rsSlider = document.createElement("div");
 		rsSlider.style.left = "100%";
