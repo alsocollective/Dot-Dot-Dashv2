@@ -424,7 +424,6 @@
 		padding-top: 20%;
 	}
 	#clientContainer{
-		vertical-align: middle;
 		text-align: center;
 		width: 100%;
 		min-width:20em;
@@ -514,66 +513,39 @@
 		margin-top: 0;
 	}
 
-	#leftSubWork{
-		position: absolute;
-		left: 0px;
-		width: 65%;
-		height: 100%;
-	}
-	#rightSubWork{
-		position: absolute;
-		right: -30%;
-		width: 35%;
-		height: 100%;
-		background-color: rgba(255,255,255,.3);
-		transition: right 1s;
-		-moz-transition: right 1s;
-		-webkit-transition: right 1s;
-		-o-transition: right 1s;
-	}
-	#rightSubWork:hover{
-		right: 0%;
-	}
-
-	#moreRightSubWork{
-		height: 100%;
-		width: 10%;
-		float: left;
-		display: table;
-		overflow: hidden;
-		transition: width 1s, font 1s;
-		-moz-transition: width 1s, font 1s;
-		-webkit-transition: width 1s, font 1s;
-		-o-transition: width 1s, font 1s;
-	}
-
-	#rightSubWork:hover #moreRightSubWork{
-		width: 0%;
-		font-size: 0;
-	}
-
-
-	#moreRightSubWork p{
-		display: table-cell;
-		vertical-align: middle;
-		text-align: center;
-	}
-
-	#slideShowImages{
-		position: absolute;
+	.royalSlider {
 		width: 100%;
 		height: 100%;
+		position: fixed;
+		z-index: 10;
+		top: 0px;
+		left: -100%;
+		direction: ltr;
+		background-color:#fcf;
+
+		transition: left 1s;
+		-moz-transition: left 1s;
+		-webkit-transition: left 1s;
+		-o-transition: left 1s;
 	}
-	.slide{
-		width: 100%;
-		height: 100%;
+
+	#rsbackButton{
+		position: fixed;
+		left: -105%;
+		bottom: 5%;
+		z-index: 11;
+		background-color: #000;
+
+		transition: left 1s;
+		-moz-transition: left 1s;
+		-webkit-transition: left 1s;
+		-o-transition: left 1s;
 	}
 
 /* == contact == */
 
 #contactContainer{
 	text-align: center;
-	padding-top: 30%;
 }
 #contactContainer h2{
 	margin-bottom: 0;
@@ -582,3 +554,4 @@
 	margin: 0;
 	background-color: #fff;
 }
+

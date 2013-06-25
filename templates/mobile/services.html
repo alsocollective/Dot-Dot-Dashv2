@@ -1,0 +1,15 @@
+{% extends "mobile/base.html" %}
+{% block pagename %}
+
+{% endblock %}
+
+{% block content %}
+
+{%for section in text%}
+	<h1>{{section.location}}</h1>
+	<p>{{section.type}}</p>
+{%endfor%}
+
+
+
+{% endblock %}

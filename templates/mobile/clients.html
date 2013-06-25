@@ -1,0 +1,12 @@
+{% extends "mobile/base.html" %}
+{% block pagename %}
+
+{% endblock %}
+
+{% block content %}
+
+{% for med in media%}<div class="client">
+	<img src="/static/uploaded/{{med.location}}">
+	</div>{%endfor%}
+
+{% endblock %}

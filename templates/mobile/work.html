@@ -1,0 +1,18 @@
+{% extends "mobile/base.html" %}
+{% block pagename %}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- {{articles}} -->
+{%for article in articles%}
+<h3>{{article.slug}}</h3>
+<ul>
+	{%for page in article.pages%}
+	<li><a href="/works/{{article.slug}}/{{page.slug}}">{{page.slug}}</a></li>
+	{%endfor%}
+</ul>
+{%endfor%}
+
+{% endblock %}

@@ -2,10 +2,16 @@ from django.shortcuts import render_to_response, get_object_or_404
 from DDD.models import Category
 
 def home(request):
-	print "yep"
 	return render_to_response('index.html',{"nothing":"nothing"})
 
 def basic(request):
+	if(not request.mobile):
+		print "MOBILE VERSION!!!!"
+		quotes = Category.objects.all().filter(title = "Quote")[0]
+		print quotes
+		return render_to_response("mobile/index.html",getText(quotes.textFields.all()))
+	else:
+		print "normal version"
 	categories = Category.objects.all()
 	out = {};
 	for cat in categories:
@@ -25,6 +31,41 @@ def basic(request):
 		out.update({cat.title:catObj})
 	return render_to_response("index.html",{"categories":out})
 
+
+def about(request):
+	data = Category.objects.all().filter(title = "About")[0]
+	return render_to_response("mobile/about.html",getText(data.textFields.all()))
+
+def services(request):
+	data = Category.objects.all().filter(title = "Services")[0].articleFields.all()[0]
+	#print data
+	out = getText(data.textFields.all())
+	out["text"].insert(0,{"location":data.title,"type":data.description.textField})
+	return render_to_response("mobile/services.html",out)
+
+def clients(request):
+	data = Category.objects.all().filter(title = "Clients")[0]
+	return render_to_response("mobile/clients.html",getImages(data.mediaField.all()))
+
+def work(request):
+	data = Category.objects.all().filter(title = "Work")[0].articleFields.all()
+	return render_to_response("mobile/work.html",getArticle(data))
+	#return render_to_response("mobile/view")
+
+def works(request,project=None,page=None):
+	data = Category.objects.all().filter(title = "Work")[0]
+	return render_to_response("mobile/view",{"":""})
+
+
+
+
+
+
+
+
+
+
+
 def getBkImg(imageIn):
 	return {"bkImg":{imageIn.fileType:"type","type":imageIn.fileType,"location":imageIn.title}}
 
@@ -32,7 +73,7 @@ def getBkVid(videoIn):
 	videos = []
 	for video in videoIn.videos.all():
 		videos.append({video.fileType:"type","type":video.fileType,"location":video.title})
-	return {"bkVid":videos}
+	return {"bkVid":videos,"placeHold":videoIn.image}
 
 def projects(request,project=None,page=None):
 	if(project == None or page == None):
@@ -99,7 +140,7 @@ def checkBk(obj):
 		videos = []
 		for vid in obj.bkVideo.videos.all():
 			videos.append({"type":vid.fileType,"name":vid.title})
-		return ({"bkVid":videos})
+		return ({"bkVid":videos,"placeHold":obj.bkVideo.image})
 	return {"":""}
 
 ##take a list of texts and return a json of them

@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'DDD.views.home', name='home'),
+    url(r'^$', 'DDD.views.basic', name='home'),
     #url(r'^insta/','DDD.views.getNewInstaPost'),
 
     url(r'^projects/(?P<project>[\w|\W]+)/(?P<page>[\w|\W]+)/$', 'DDD.views.projects'),
@@ -19,4 +19,12 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    ###mobile###
+    url(r'^about/$', 'DDD.views.about'),
+    url(r'^services/$', 'DDD.views.services'),
+    url(r'^clients/$', 'DDD.views.clients'),
+    url(r'^work/$', 'DDD.views.work'),
+    url(r'^works/(?P<project>[\w|\W]+)/(?P<page>[\w|\W]+)/$', 'DDD.views.works'),
+
 )

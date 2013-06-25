@@ -46,8 +46,7 @@
 	<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 <![endif]-->
 <nav id="sticky_navigation"><!--  once it gets down to this area it gains the class nav_fixed -->
-	<img id="largeLogo" src="/../static/img/logo.png">
-
+	<img id="largeLogo" src="/../static/img/assets/logo.png">
 	<ul id="stickPoint">
 		<li id="aboutLink"><a href="#about">About</a></li>
 		<li id="serviceLink"><a href="#services">Services</a></li>
@@ -58,7 +57,7 @@
 </nav>
 
 
-<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="/../static/video/Lightning/Lightning.jpg" data-setup='{ "controls": false, "autoplay": true, "preload": "auto", "loop": true}'></video></div>
+<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="/../static/video/Lightning/Lightning.jpg"></video></div>
 <div class="bkImage" id="bkStrechImage"></div>
 
 <div id="firstPadding"></div>
@@ -158,9 +157,9 @@
 	{%endwith%}
 </section>
 
-<section id="socMedia">
+<!-- <section id="socMedia">
 
-</section>
+</section> -->
 
 <section id="contact">
 {%with contact=categories.Contact%}
@@ -180,6 +179,9 @@
 <script src="/../static/js/script.js"></script>
 <script type="text/javascript">
 //INITIALIZATION of everything!!
+	if(window.location.hash){
+		goToThisEndPoint(window.location.hash.substring(1))
+	}
 	var scrollFromTop = 0;
 	var windowHeight = windowSize().height;
 //this allows us to use transparency
@@ -221,35 +223,44 @@
 
 //background
 	//videos
+
 		var videos = [
-			{%with quote=categories.Quote.text%}
-				{"range":400,"parent":document.getElementById("{{quote.0.location}}"),"tag":"remove","mp4":[
+			{%with quote=categories.Quote.text.0%}
+				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
 				{% for vidType in quote.bkVid%}
-					{% if forloop.last %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}
-					{% else %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},
-					{% endif %}
+					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
 				{%endfor%}
-					// {type: "video/mp4", src: "http://192.168.100.105/videos/Lightning/Lightning.mp4"},
-					// {type: "video/webm", src: "http://192.168.100.105/videos/Lightning/Lightning.webm"},
-					// {type: "video/ogv", src: "http://192.168.100.105/videos/Lightning/Lightning.ogv"}
-				]},
+				],"loadImg":"{{quote.text.0.placeHold}}"},
 			{%endwith%}
+
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
 			{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
+			{%with work=categories.Work%}
 			{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.105/videos/River/River.mp4"},
-				{type: "video/webm", src: "http://192.168.100.105/videos/River/River.webm"},
-				{type: "video/ogv", src: "http://192.168.100.105/videos/River/River.ogv"}
-			]},
-			{"range":400,"parent":document.getElementById("collaboQuote"),"img":4},
+				{% for vidType in work.bkVid%}
+					{% if forloop.last %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+					{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+					{% endif %}
+				{%endfor%}
+			],"loadImg":"{{work.placeHold}}"},
+			{%endwith%}
+
+			{"range":400,"parent":document.getElementById("{{categories.Quote.text.2.location}}"),"img":4},
+			{%with contact=categories.Contact%}
 			{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","mp4":[
-				{type: "video/mp4", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.mp4"},
-				{type: "video/webm", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.webm"},
-				{type: "video/ogv", src: "http://192.168.100.105/videos/Waterfall/Waterfall1.ogv"}
-			]}
+				{% for vidType in contact.bkVid%}
+					{% if forloop.last %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+					{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+					{% endif %}
+				{%endfor%}
+			],"loadImg":"{{contact.placeHold}}"}
+			{%endwith%}
 		];
 		determinHightsForVids();
 		var currentVid = 0;
@@ -264,78 +275,15 @@
 	//images
 		var imageContainer = document.getElementById("bkStrechImage");
 		var images = $(imageContainer).backstretch([
-			'/../static/img/BK1.jpg',
-			'/../static/img/BK2.jpg',
-			'/../static/img/BK3.jpg',
-			'/../static/img/BK4.jpg'
+			'/../static/uploaded/{{categories.About.bkImg.location}}',
+			'/../static/uploaded/{{categories.Services.bkImg.location}}',
+			'/../static/uploaded/{{categories.Clients.bkImg.location}}',
+			'/../static/uploaded/{{categories.Quote.text.2.bkImg}}'
 		], {fade: 500}).data('backstretch').pause();
 		imageContainer.style.opacity = 0;
 
 	var transitioning = false;
-
 </script>
-
-<script>
-//project
-//onlyButton
-	$(".project").click(function(event){
-		event.preventDefault()
-		var workToShow = works[this.id];
-		console.log(works);
-
-		var rsSlider = document.createElement("div");
-		rsSlider.style.left = "100%";
-		rsSlider.setAttribute("class","royalSlider");
-		document.body.appendChild(rsSlider);
-
-		var backButton = document.createElement("a");
-		backButton.innerHTML = "Back";
-		backButton.style.left = "105%";
-		backButton.id = "rsbackButton";
-		$(backButton).click(function(){
-			rsSlider.style.left = "100%";
-			backButton.style.left = "105%";
-			setTimeout(function(){
-				rsSlider.parentNode.removeChild(rsSlider);
-				backButton.parentNode.removeChild(backButton);
-			},1000);
-		});
-		document.body.appendChild(backButton);
-
-		rsSlider.innerHTML = "";
-		var newElement = document.createElement("div");
-		newElement.setAttribute("class","rsContent");
-
-		var numberofslides = workToShow["Links"].length;
-		for(var a = 0; a < numberofslides; ++a){
-			var temp = newElement.cloneNode(true)
-			temp.innerHTML += "  " + a;
-			rsSlider.appendChild(temp);
-		}
-
-		var rsSliderChildren = rsSlider.childNodes;
-
-		$(rsSliderChildren[0]).load(workToShow["Links"][0],function(){
-			with(rsSlider.style){
-				left = "0%";
-			}
-			backButton.style.left = "5%";
-
-			for(var a = 1; a < rsSliderChildren.length; ++a){
-				$(rsSliderChildren[a]).load(workToShow["Links"][a]);
-			}
-
-			$(".royalSlider").royalSlider({
-				// options go here
-				// as an example, enable keyboard arrows nav
-				keyboardNavEnabled: true
-			});
-		});
-
-
-	});
-
-	</script>
 
 <script type="text/javascript">
   // (function() {

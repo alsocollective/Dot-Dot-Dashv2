@@ -1,0 +1,15 @@
+{% extends "mobile/base.html" %}
+{% block pagename %}
+about
+{% endblock %}
+
+{% block content %}
+
+	<div id="containerAbout">
+		{% for sec in text%}
+			<h1>{{sec.location}}</h1>
+			<div>{{sec.type|safe}}</div>
+		{%endfor%}
+	</div>
+
+{% endblock %}
