@@ -103,7 +103,7 @@
 {%with about=categories.About%}
 	<div id="containerAbout">
 		{% for text in about.text%}
-			<h1>{{text.location}}</h1>
+			<h1>{{text.location|safe}}</h1>
 			<div id="twoColoumContent">{{text.type|safe}}</div>
 		{%endfor%}
 	</div>
@@ -121,15 +121,15 @@
 
 	<div id="contentServices">
 		<div id="basicService" class="servicCat">
-			<h1>{{services.subHead}}</h1>
+			<h1>{{services.subHead|safe}}</h1>
 			<p>
-			{{services.description}}
+			{{services.description|safe}}
 			</p>
 		</div>
 		{%for section in services.text.text%}
 			<div id="{{section.slug}}" class="servicCat">
-				<h1>{{section.location}}</h1>
-				<p>{{section.type}}</p>
+				<h1>{{section.location|safe}}</h1>
+				<p>{{section.type|safe}}</p>
 			</div>
 		{%endfor%}
 	</div>
@@ -149,8 +149,8 @@
 
 <section id="clients">
 	<div id="containerAbout">
-	{{categories.Clients.title}}
-	{{categories.Clients.text.0.type}}
+	{{categories.Clients.title|safe}}
+	{{categories.Clients.text.0.type|safe}}
 	</div>
 	<div id="clientContainer">
 	{% for media in categories.Clients.media%}<div class="client">
@@ -179,10 +179,10 @@
 	<div id="mainContainer"><div id="leftContainer">
 			<div id="workTopPadding"></div>
 			<div id="workButtons">{%for article in work.articles%}<a href="#" id="{{article.title}}" class="project">
-				<h2>{{article.title}}</h2>
-				<h3>{{article.subHead}}</h3>
+				<h2>{{article.title|safe}}</h2>
+				<h3>{{article.subHead|safe}}</h3>
 				<p>
-					{{article.description}}
+					{{article.description|safe}}
 				</p>
 				</a>{%endfor%}
 			</div>
@@ -198,7 +198,7 @@
 
 <section id="contact">
 	<div id="containerAbout">
-	<h2>{{categories.Contact.title}}</h2>
+	<h2>{{categories.Contact.title|safe}}</h2>
 	<h3>{{categories.Contact.text.0.type|safe}}</h3>
 	</div>
 </section>
