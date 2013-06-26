@@ -108,24 +108,26 @@
 </section>
 
 <section id="services">
-	<div id="containerAbout">
-		<h1>{{categories.Services.text.0.location}}</h1>
-		{{categories.Services.text.0.type}}
-		{% for media in categories.Services.media%}<div class="client">
-			<img src="/static/uploaded/{{media.location}}">
-		</div>{%endfor%}
+	{%with services=categories.Services.articles.0%}
+
+	<div id="contentServices">
+		<div id="basicService" class="servicCat">
+			<h1>{{services.subHead}}</h1>
+			<p>
+			{{services.description}}
+			</p>
+		</div>
+		{%for section in services.text.text%}
+			<div id="{{section.slug}}" class="servicCat">
+				<h1>{{section.location}}</h1>
+				<p>{{section.type}}</p>
+			</div>
+		{%endfor%}
 	</div>
-</section>
-<section id="clients">
-	<div id="containerAbout">
-	{{categories.Clients.title}}
-	{{categories.Clients.text.0.type}}
-	</div>
-	<div id="clientContainer">
-	{% for media in categories.Clients.media%}<div class="client">
-		<img src="/static/uploaded/{{media.location}}">
-	</div>{%endfor%}
-	</div>
+	<div id="cirlces"><span class="block">{%for section in services.text.text%}<a class="serviceBlock" href="#{{section.slug}}" id="{{section.slug}}Button">
+	<div class="serviceCircle"><img src="/../static/uploaded/{{section.bkImg}}"></div>
+	</a>{%endfor%}</div>
+	{%endwith%}
 </section>
 
 <section id="work">
@@ -215,6 +217,12 @@
 		fadingElement[a].makeFade(scrollFromTop,windowHeight);
 	}
 
+//services
+	{%with services=categories.Services.articles.0%}
+		var ServiceButtons = new Buttons(["basicService","serviceLink",{%for section in services.text.text%}"{{section.slug}}","{{section.slug}}Button",{%endfor%}]);
+	{%endwith%}
+
+
 //background
 	//videos
 
@@ -271,7 +279,20 @@
 			console.log(this);
 		});
 
+
+
 		var videoContainer = document.getElementById("vid_1");
+
+
+		function restartVideo(){
+			theVideo.currentTime = 0.1;
+			theVideo.play();
+		}
+
+
+		//{"autoplay": true,"controls": false,"loop": "true","poster":'/../static/uploaded/'+videos[0]["loadImg"]}
+		// theVideo.addEvent('ended',restartVideo);
+
 
 	//images
 		var imageContainer = document.getElementById("bkStrechImage");
@@ -286,13 +307,13 @@
 </script>
 
 <script type="text/javascript">
-  (function() {
-    var config = {
-      kitId: 'pvh7czu',
-      scriptTimeout: 3000
-    };
-    var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
-  })();
+  // (function() {
+  //   var config = {
+  //     kitId: 'pvh7czu',
+  //     scriptTimeout: 3000
+  //   };
+  //   var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+  // })();
 </script>
 
 <body>
