@@ -37,15 +37,20 @@ def about(request):
 	return render_to_response("mobile/about.html",getText(data.textFields.all()))
 
 def services(request):
-	data = Category.objects.all().filter(title = "Services")[0].articleFields.all()[0]
-	#print data
-	out = getText(data.textFields.all())
-	out["text"].insert(0,{"location":data.title,"type":data.description.textField})
+	data = Category.objects.all().filter(title = "Services")[0]
+	out = {}
+	out.update(getText(data.textFields.all()))
+	out.update(getImages(data.mediaField.all()))
 	return render_to_response("mobile/services.html",out)
+
+
 
 def clients(request):
 	data = Category.objects.all().filter(title = "Clients")[0]
-	return render_to_response("mobile/clients.html",getImages(data.mediaField.all()))
+	out = {};
+	out.update(getImages(data.mediaField.all()))
+	out.update(getText(data.textFields.all()))
+	return render_to_response("mobile/clients.html",out)
 
 def work(request):
 	data = Category.objects.all().filter(title = "Work")[0].articleFields.all()

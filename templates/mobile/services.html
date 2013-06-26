@@ -10,6 +10,10 @@
 	<p>{{section.type}}</p>
 {%endfor%}
 
+{%for section in media%}
+	<img src="/../static/uploaded/{{section.location}}">
+{% endfor %}
+
 
 
 {% endblock %}

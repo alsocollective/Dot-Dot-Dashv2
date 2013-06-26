@@ -9,7 +9,7 @@
 		<title>Dot Dot Dash</title>
 
 
-<!-- Make sure to replace all the keywords ands such!!! -->
+		<!-- Make sure to replace all the keywords ands such!!! -->
 		<!--Description, Keywords-->
 		<meta name="description" content="OCAD University’s Faculty of Design is announcing a call for proposals for Urban Ecologies 2013, a conference that will examine the impact of five intersecting themes that are shaping the future of design in our cities.">
 
@@ -22,14 +22,14 @@
 		<link rel="stylesheet" type="text/css" href="/../static/css/normalize.min.css">
         <link rel="stylesheet" href="/../static/css/main.css">
 
-<!-- We need to get the logo in here! -->
+		<!-- We need to get the logo in here! -->
 		<link rel="icon" type="image/png" href="/../static/img/logo.png">
 
 
 		<link href="http://localhost:8124/static/css/video-js.css" rel="stylesheet">
 		<script src="http://localhost:8124/static/js/video.js"></script>
-<!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/c/video.js"></script> -->
+		<!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+		<script src="http://vjs.zencdn.net/c/video.js"></script> -->
 		<script>
 			_V_.options.flash.swf = "http://example.com/path/to/video-js.swf"
 		</script>
@@ -54,13 +54,30 @@
 		<li id="clientsLink"><a href="#clients">Clients</a></li>
 		<li id="ourWorkLink"><a href="#work">Our Work</a></li>
 		<li id="contactLink"><a href="#work">Contact</a></li>
-		<li><a href="{{categories.SocialMedia.text.0.type}}">{{categories.SocialMedia.text.0.location}}</a></li>
-		<li><a href="{{categories.SocialMedia.text.1.type}}">{{categories.SocialMedia.text.1.location}}</a></li>
+		<li><a href="{{categories.SocialMedia.text.0.type}}"><img id="{{categories.SocialMedia.text.0.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.0.bkImg}}"></a></li>
+		<li><a href="{{categories.SocialMedia.text.1.type}}"><img id="{{categories.SocialMedia.text.1.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.1.bkImg}}"></a></li>
 	</ul>
 </nav>
 
+{%with quote=categories.Quote.text.0%}
+	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="{{quote.placeHold}}" autoplay loop>
+		{% for vidType in quote.bkVid%}
+		<source src="http://localhost/videos/Lightning/Lightning.mp4" type="video/mp4"/>
+		<!-- http://stackoverflow.com/questions/8088364/html5-video-will-not-loop -->
+		<!-- <source src="http://192.168.100.105:8124/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/> -->
+		{%endfor%}
 
-<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin"></video></div>
+	</video></div>
+{%endwith%}
+<!--
+				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
+				{% for vidType in quote.bkVid%}
+					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
+				{%endfor%}
+				],"loadImg":""},
+			 -->
+
 <div class="bkImage" id="bkStrechImage"></div>
 
 <section class="quote">
@@ -240,9 +257,8 @@
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":2},
-			{%with work=categories.Work%}
 				{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
-					{% for vidType in work.bkVid%}
+					{% for vidType in categories.Work.bkVid%}
 						{% if forloop.last %}
 						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
 						{% else %}
@@ -250,7 +266,6 @@
 						{% endif %}
 					{%endfor%}
 				],"loadImg":"{{work.placeHold}}"},
-			{%endwith%}
 
 			{%with contact=categories.Contact%}
 				{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","img":3}
@@ -258,8 +273,17 @@
 		];
 
 		determinHightsForVids();
-		var currentVid = -3;
-		var theVideo = _V_("vid_1",{"loop":"true"});
+		var currentVid = 0;
+		var theVideo;
+		_V_("vid_1").ready(function(){
+//			this.addEvent('ended',restartVideo,false);
+			theVideo = this;
+			theVideo.volume(0);
+			console.log(this);
+		});
+
+
+
 		var videoContainer = document.getElementById("vid_1");
 
 
@@ -270,10 +294,6 @@
 
 
 		//{"autoplay": true,"controls": false,"loop": "true","poster":'/../static/uploaded/'+videos[0]["loadImg"]}
-		theVideo.ready(function(){
-			backGroundChange();
-			theVideo.volume(0);
-		});
 		// theVideo.addEvent('ended',restartVideo);
 
 
