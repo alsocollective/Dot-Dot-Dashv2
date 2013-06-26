@@ -61,15 +61,24 @@
 </nav>
 
 {%with quote=categories.Quote.text.0%}
-	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="{{quote.placeHold}}" autoplay loop>
-		{% for vidType in quote.bkVid%}
-<!-- 		<source src="http://www.alsocollective.com/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
+	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="http://www.alsocollective.com:8000/static/uploaded/{{quote.placeHold}}" autoplay loop>
+		<!-- 		<source src="http://www.alsocollective.com/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
 		<!-- http://stackoverflow.com/questions/8088364/html5-video-will-not-loop -->
+		{% for vidType in quote.bkVid%}
+
 		<source src="http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
 		{%endfor%}
 
 	</video></div>
 {%endwith%}
+<!--
+				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
+				{% for vidType in quote.bkVid%}
+					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
+					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
+				{%endfor%}
+				],"loadImg":""},
+			 -->
 
 <div class="bkImage" id="bkStrechImage"></div>
 
@@ -128,6 +137,26 @@
 	<div class="serviceCircle"><img src="/../static/uploaded/{{section.bkImg}}"></div>
 	</a>{%endfor%}</div>
 	{%endwith%}
+
+<!-- 	<div id="containerAbout">
+		<h1>{{categories.Services.text.0.location}}</h1>
+		{{categories.Services.text.0.type}}
+		{% for media in categories.Services.media%}<div class="client">
+			<img src="/static/uploaded/{{media.location}}">
+		</div>{%endfor%}
+	</div> -->
+</section>
+
+<section id="clients">
+	<div id="containerAbout">
+	{{categories.Clients.title}}
+	{{categories.Clients.text.0.type}}
+	</div>
+	<div id="clientContainer">
+	{% for media in categories.Clients.media%}<div class="client">
+		<img src="/static/uploaded/{{media.location}}">
+	</div>{%endfor%}
+	</div>
 </section>
 
 <section id="work">
@@ -236,7 +265,7 @@
 						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"},
 					{% endif %}
 				{%endfor%}
-				],"loadImg":"{{quote.placeHold}}"},
+				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{quote.placeHold}}"},
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
@@ -251,7 +280,7 @@
 							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
-				],"loadImg":"{{work.placeHold}}"},
+				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{work.placeHold}}"},
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":2},
@@ -263,7 +292,7 @@
 							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
-				],"loadImg":"{{work.placeHold}}"},
+				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{work.placeHold}}"},
 
 			{%with contact=categories.Contact%}
 				{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","img":3}
