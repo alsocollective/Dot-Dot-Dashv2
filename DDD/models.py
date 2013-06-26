@@ -90,7 +90,7 @@ class Article(models.Model):
 	videoURL = models.URLField(max_length=800, blank=True)
 	createdDate = models.DateField(auto_now=True)
 	slug = models.SlugField(blank=True)
-	description = models.ForeignKey(TextNode,blank=True,null=True,related_name="textDescription+")
+	description = models.ForeignKey(TextNode,related_name="textDescription+")
 
 	def save(self,*args, **kwargs):
 		self.slug = slugify(self.title)
