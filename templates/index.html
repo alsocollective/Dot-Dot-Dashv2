@@ -26,8 +26,8 @@
 		<link rel="icon" type="image/png" href="/../static/img/logo.png">
 
 
-		<link href="http://localhost:8124/static/css/video-js.css" rel="stylesheet">
-		<script src="http://localhost:8124/static/js/video.js"></script>
+		<link href="http://localhost:8000/static/css/video-js.css" rel="stylesheet">
+		<script src="http://localhost:8000/static/js/video.js"></script>
 		<!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 		<script src="http://vjs.zencdn.net/c/video.js"></script> -->
 		<script>
@@ -65,7 +65,7 @@
 		{% for vidType in quote.bkVid%}
 <!-- 		<source src="http://localhost/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
 		<!-- http://stackoverflow.com/questions/8088364/html5-video-will-not-loop -->
-		<source src="http://192.168.100.105:8124/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
+		<source src="http://localhost:8000/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
 		{%endfor%}
 
 	</video></div>
@@ -236,8 +236,11 @@
 			{%with quote=categories.Quote.text.0%}
 				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
 				{% for vidType in quote.bkVid%}
-					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"}{% else %}
-					{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"},{% endif %}
+					{% if forloop.last %}
+						{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.name}}"}
+					{% else %}
+						{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.name}}"},
+					{% endif %}
 				{%endfor%}
 				],"loadImg":"{{quote.placeHold}}"},
 			{%endwith%}
@@ -249,9 +252,9 @@
 				{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","mp4":[
 					{% for vidType in cat.bkVid%}
 						{% if forloop.last %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
 				],"loadImg":"{{work.placeHold}}"},
@@ -261,9 +264,9 @@
 				{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
 					{% for vidType in categories.Work.bkVid%}
 						{% if forloop.last %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
 				],"loadImg":"{{work.placeHold}}"},
@@ -277,7 +280,6 @@
 		var currentVid = 0;
 		var theVideo;
 		_V_("vid_1").ready(function(){
-//			this.addEvent('ended',restartVideo,false);
 			theVideo = this;
 			theVideo.volume(0);
 			console.log(this);
