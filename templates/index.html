@@ -70,18 +70,10 @@
 
 	</video></div>
 {%endwith%}
-<!--
-				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
-				{% for vidType in quote.bkVid%}
-					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
-				{%endfor%}
-				],"loadImg":""},
-			 -->
 
 <div class="bkImage" id="bkStrechImage"></div>
 
-<section class="q 	uote">
+<section class="quote">
 	<p id="{{categories.Quote.text.0.location}}">
 			{{categories.Quote.text.0.type|safe}}
 	</p>
@@ -223,12 +215,6 @@
 		fadingElement[a].makeFade(scrollFromTop,windowHeight);
 	}
 
-//services
-	// {%with services=categories.Services.articles.0%}
-	// 	var ServiceButtons = new Buttons(["basicService","serviceLink",{%for section in services.text.text%}"{{section.slug}}","{{section.slug}}Button",{%endfor%}]);
-	// {%endwith%}
-
-
 //background
 	//videos
 
@@ -285,20 +271,7 @@
 			console.log(this);
 		});
 
-
-
 		var videoContainer = document.getElementById("vid_1");
-
-
-		function restartVideo(){
-			theVideo.currentTime = 0.1;
-			theVideo.play();
-		}
-
-
-		//{"autoplay": true,"controls": false,"loop": "true","poster":'/../static/uploaded/'+videos[0]["loadImg"]}
-		// theVideo.addEvent('ended',restartVideo);
-
 
 	//images
 		var imageContainer = document.getElementById("bkStrechImage");
@@ -313,13 +286,13 @@
 </script>
 
 <script type="text/javascript">
-  // (function() {
-  //   var config = {
-  //     kitId: 'pvh7czu',
-  //     scriptTimeout: 3000
-  //   };
-  //   var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
-  // })();
+  (function() {
+    var config = {
+      kitId: 'pvh7czu',
+      scriptTimeout: 3000
+    };
+    var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+  })();
 </script>
 
 <body>
