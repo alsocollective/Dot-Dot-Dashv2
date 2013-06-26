@@ -58,10 +58,11 @@ $(".project").click(function(event){
 function backGroundChange(){
 	for(var a = 0; a < videos.length; ++a){
 		if(videos[a]["at"] < scrollFromTop && videos[a]["at"]+(videos[a]["range"]/2) > scrollFromTop && !transitioning){
-			if(videos[a]["at"]<scrollFromTop){
+			if(videos[a]["at"]<scrollFromTop  || currentVid == -3){
 				if(a != currentVid){
 					transitioning = true;
 					if(videos[a]["img"]){
+						console.log("scroll down transition image");
 						images.show(videos[a]["img"]-1);
 						setTimeout(function(){
 							if(useOpacity){
@@ -75,9 +76,10 @@ function backGroundChange(){
 						},500)
 						currentVid = a;
 					} else if (videos[a]["mp4"]){
+						console.log("scroll down transition video");
 						currentVid = a;
 						theVideo.src(videos[currentVid]["mp4"]);
-						theVideo.poster(videos[currentVid]["loadImg"])
+						//theVideo.poster(videos[currentVid]["loadImg"])
 						theVideo.play();
 						setTimeout(function(){
 							setTimeout(function(){
@@ -94,8 +96,10 @@ function backGroundChange(){
 				}
 			} else if(videos[a]["at"]>scrollFromTop){
 				if(a!= 0 && a-1 != currentVid){
+					console.log("in");
 					transitioning = true;
 					if(videos[a-1]["img"]){
+						console.log("scroll up transition image");
 						images.show(videos[a-1]["img"]-1);
 						currentVid = a-1;
 						setTimeout(function(){
@@ -109,6 +113,7 @@ function backGroundChange(){
 							});
 						},500)
 					} else if (videos[a-1]["mp4"]){
+						console.log("scroll up transition video");
 						currentVid = a-1;
 						theVideo.src(videos[currentVid]["mp4"]);
 						theVideo.play();

@@ -26,9 +26,10 @@
 		<link rel="icon" type="image/png" href="/../static/img/logo.png">
 
 
-		<link href="/../static/css/video-js.css" rel="stylesheet" type="text/css">
-		<script src="/../static/js/video.js"></script>
-
+		<link href="http://localhost:8124/static/css/video-js.css" rel="stylesheet">
+		<script src="http://localhost:8124/static/js/video.js"></script>
+<!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/c/video.js"></script> -->
 		<script>
 			_V_.options.flash.swf = "http://example.com/path/to/video-js.swf"
 		</script>
@@ -53,21 +54,32 @@
 		<li id="clientsLink"><a href="#clients">Clients</a></li>
 		<li id="ourWorkLink"><a href="#work">Our Work</a></li>
 		<li id="contactLink"><a href="#work">Contact</a></li>
+		<li><a href="{{categories.SocialMedia.text.0.type}}">{{categories.SocialMedia.text.0.location}}</a></li>
+		<li><a href="{{categories.SocialMedia.text.1.type}}">{{categories.SocialMedia.text.1.location}}</a></li>
 	</ul>
 </nav>
 
 
-<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" width="auto" height="auto" poster="/../static/video/Lightning/Lightning.jpg"></video></div>
+<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin"></video></div>
 <div class="bkImage" id="bkStrechImage"></div>
 
-<div id="firstPadding"></div>
 <section class="quote">
-	{%with quote=categories.Quote.text%}
-	<p id="{{quote.0.location}}">
-			{{quote.0.type}}
+	<p id="{{categories.Quote.text.0.location}}">
+			{{categories.Quote.text.0.type|safe}}
 	</p>
-	{%endwith%}
 </section>
+<section class="quote">
+	<p id="{{categories.Quote.text.1.location}}">
+			{{categories.Quote.text.1.type|safe}}
+	</p>
+</section>
+
+<section class="quote">
+	<p id="{{categories.Quote.text.2.location}}">
+			{{categories.Quote.text.2.type|safe}}
+	</p>
+</section>
+
 <section id="about">
 {%with about=categories.About%}
 	<div id="containerAbout">
@@ -78,44 +90,34 @@
 	</div>
 {%endwith%}
 </section>
-<section class="quote">
-	{%with quote=categories.Quote.text%}
-	<p id="{{quote.1.location}}">
-			{{quote.1.type}}
-	</p>
-	{%endwith%}
-</section>
-<section id="services">
-	{%with services=categories.Services.articles.0%}
 
-	<div id="contentServices">
-		<div id="basicService" class="servicCat">
-			<h1>{{services.subHead}}</h1>
-			<p>
-				{{services.description}}
-			</p>
-		</div>
-		{%for section in services.text.text%}
-		<div id="{{section.slug}}" class="servicCat">
-			<h1>{{section.location}}</h1>
-			<p>{{section.type}}</p>
-		</div>
-		{%endfor%}
+<section class="quote">
+	<p id="{{categories.Quote.text.3.location}}">
+			{{categories.Quote.text.3.type|safe}}
+	</p>
+</section>
+
+<section id="services">
+	<div id="containerAbout">
+		<h1>{{categories.Services.text.0.location}}</h1>
+		{{categories.Services.text.0.type}}
+		{% for media in categories.Services.media%}<div class="client">
+			<img src="/static/uploaded/{{media.location}}">
+		</div>{%endfor%}
 	</div>
-	<div id="cirlces"><span class="block">{%for section in services.text.text%}<a class="serviceBlock" href="#{{section.slug}}" id="{{section.slug}}Button">
-			<div class="serviceCircle"><img src="/../static/uploaded/{{section.bkImg}}"></div>
-		</a>{%endfor%}</div>
-	{%endwith%}
 </section>
 <section id="clients">
+	<div id="containerAbout">
+	{{categories.Clients.title}}
+	{{categories.Clients.text.0.type}}
+	</div>
 	<div id="clientContainer">
-		{%with clients=categories.Clients%}
-			{% for media in clients.media%}<div class="client">
-				<img src="/static/uploaded/{{media.location}}">
-				</div>{%endfor%}
-		{%endwith%}
+	{% for media in categories.Clients.media%}<div class="client">
+		<img src="/static/uploaded/{{media.location}}">
+	</div>{%endfor%}
 	</div>
 </section>
+
 <section id="work">
 {%with work=categories.Work%}
 	<script type="text/javascript">
@@ -149,27 +151,15 @@
 {%endwith%}
 </section>
 
-<section class="quote">
-	{%with quote=categories.Quote.text%}
-	<p id="{{quote.2.location}}">
-			{{quote.2.type}}
-	</p>
-	{%endwith%}
-</section>
-
 <!-- <section id="socMedia">
 
 </section> -->
 
 <section id="contact">
-{%with contact=categories.Contact%}
-	<div id="contactContainer">
-		{%for mean in contact.text%}
-			<h2>{{mean.location}}</h2>
-			<h3>{{mean.type}}</h3>
-		{%endfor%}
+	<div id="containerAbout">
+	<h2>{{categories.Contact.title}}</h2>
+	<h3>{{categories.Contact.text.0.type|safe}}</h3>
 	</div>
-{%endwith%}
 </section>
 
 <script src="/../static/js/jquery.min.js"></script>
@@ -191,13 +181,13 @@
 	$("#largeLogo").one('load',function(){						//when the image loads do this
 		$(setUpStaticLocationOfSticky(false)).waypoint(function(){ 	//setUpStaticLocationOfSticky returns an emement
 			$("#sticky_navigation").toggleClass("nav_fixed");
-		})
+		});
 	}).each(function() {
 		if(this.complete) $(this).load();
 	}).error(function(){
 		$(setUpStaticLocationOfSticky(72)).waypoint(function(){ 	//we give an argument of a potential hight
 			$("#sticky_navigation").toggleClass("nav_fixed");
-		})
+		});
 	});
 	addEvent("aboutLink","about");
 	addEvent("serviceLink","services");
@@ -216,9 +206,9 @@
 	}
 
 //services
-	{%with services=categories.Services.articles.0%}
-		var ServiceButtons = new Buttons(["basicService","serviceLink",{%for section in services.text.text%}"{{section.slug}}","{{section.slug}}Button",{%endfor%}]);
-	{%endwith%}
+	// {%with services=categories.Services.articles.0%}
+	// 	var ServiceButtons = new Buttons(["basicService","serviceLink",{%for section in services.text.text%}"{{section.slug}}","{{section.slug}}Button",{%endfor%}]);
+	// {%endwith%}
 
 
 //background
@@ -231,54 +221,68 @@
 					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
 					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
 				{%endfor%}
-				],"loadImg":"{{quote.text.0.placeHold}}"},
+				],"loadImg":"{{quote.placeHold}}"},
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
-			{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","img":2},
-			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":3},
-			{%with work=categories.Work%}
-			{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
-				{% for vidType in work.bkVid%}
-					{% if forloop.last %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
-					{% else %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
-					{% endif %}
-				{%endfor%}
-			],"loadImg":"{{work.placeHold}}"},
+
+		//change this one to video
+			{%with cat=categories.Services%}
+				{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","mp4":[
+					{% for vidType in cat.bkVid%}
+						{% if forloop.last %}
+						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+						{% else %}
+						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+						{% endif %}
+					{%endfor%}
+				],"loadImg":"{{work.placeHold}}"},
 			{%endwith%}
 
-			{"range":400,"parent":document.getElementById("{{categories.Quote.text.2.location}}"),"img":4},
+			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":2},
+			{%with work=categories.Work%}
+				{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
+					{% for vidType in work.bkVid%}
+						{% if forloop.last %}
+						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+						{% else %}
+						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+						{% endif %}
+					{%endfor%}
+				],"loadImg":"{{work.placeHold}}"},
+			{%endwith%}
+
 			{%with contact=categories.Contact%}
-			{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","mp4":[
-				{% for vidType in contact.bkVid%}
-					{% if forloop.last %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
-					{% else %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
-					{% endif %}
-				{%endfor%}
-			],"loadImg":"{{contact.placeHold}}"}
+				{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","img":3}
 			{%endwith%}
 		];
+
 		determinHightsForVids();
-		var currentVid = 0;
+		var currentVid = -3;
+		var theVideo = _V_("vid_1",{"loop":"true"});
 		var videoContainer = document.getElementById("vid_1");
-		var theVideo = _V_("vid_1",{"loop": "true","autoplay": true,"controls": false});
-		theVideo.ready(function(){
-			theVideo.src(videos[0]["mp4"]);
+
+
+		function restartVideo(){
+			theVideo.currentTime = 0.1;
 			theVideo.play();
+		}
+
+
+		//{"autoplay": true,"controls": false,"loop": "true","poster":'/../static/uploaded/'+videos[0]["loadImg"]}
+		theVideo.ready(function(){
+			backGroundChange();
 			theVideo.volume(0);
 		});
+		// theVideo.addEvent('ended',restartVideo);
+
 
 	//images
 		var imageContainer = document.getElementById("bkStrechImage");
 		var images = $(imageContainer).backstretch([
 			'/../static/uploaded/{{categories.About.bkImg.location}}',
-			'/../static/uploaded/{{categories.Services.bkImg.location}}',
 			'/../static/uploaded/{{categories.Clients.bkImg.location}}',
-			'/../static/uploaded/{{categories.Quote.text.2.bkImg}}'
+			'/../static/uploaded/{{categories.Contact.bkImg.location}}'
 		], {fade: 500}).data('backstretch').pause();
 		imageContainer.style.opacity = 0;
 

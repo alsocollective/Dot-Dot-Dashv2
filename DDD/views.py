@@ -5,7 +5,7 @@ def home(request):
 	return render_to_response('index.html',{"nothing":"nothing"})
 
 def basic(request):
-	if(not request.mobile):
+	if(request.mobile):
 		print "MOBILE VERSION!!!!"
 		quotes = Category.objects.all().filter(title = "Quote")[0]
 		print quotes
@@ -52,9 +52,19 @@ def work(request):
 	return render_to_response("mobile/work.html",getArticle(data))
 	#return render_to_response("mobile/view")
 
-def works(request,project=None,page=None):
-	data = Category.objects.all().filter(title = "Work")[0]
-	return render_to_response("mobile/view",{"":""})
+def works(request,project=None):
+	work = Category.objects.filter(slug = "work")[0]
+	article = work.articleFields.filter(slug = project)
+	data = article[0].pages.all()
+	out = {"title":article[0].title};
+	pages = []
+	for page in data:
+		pageObj = {"page":page.title}
+		pageObj.update(getText(page.textFields.all()))
+		pageObj.update(getImages(page.mediaField.all()))
+		pages.append(pageObj)
+	out.update({"pages":pages})
+	return render_to_response("mobile/works.html",{"page":out})
 
 
 

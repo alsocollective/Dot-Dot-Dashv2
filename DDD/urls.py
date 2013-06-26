@@ -25,6 +25,6 @@ urlpatterns = patterns('',
     url(r'^services/$', 'DDD.views.services'),
     url(r'^clients/$', 'DDD.views.clients'),
     url(r'^work/$', 'DDD.views.work'),
-    url(r'^works/(?P<project>[\w|\W]+)/(?P<page>[\w|\W]+)/$', 'DDD.views.works'),
+    url(r'^works/(?P<project>[\w|\W]+)/$', 'DDD.views.works'),
 
 )

@@ -74,20 +74,15 @@ class mediaAdmin(admin.ModelAdmin):
 			}),
 	]
 
-# class Image(admin.ModelAdmin):
-# 	fieldsets = [
-# 		(None,{'fields':['location']}),
-# 		('Advance options', {
-# 			'classes':('collapse',),
-# 			'fields':('description','title','fileType')
-# 			}),
-# 	]
+class VideoNodeAdmin(admin.ModelAdmin):
+	filter_horizontal = ('videos',)
+
 
 
 
 admin.site.register(MediaNode,mediaAdmin)
-admin.site.register(VideoNode)
+admin.site.register(VideoNode,VideoNodeAdmin)
 admin.site.register(TextNode,textNodeAdmin)
-admin.site.register(Category,categoryAdmin)
+admin.site.register(Category)
 admin.site.register(Article)
 admin.site.register(Page,pageAdmin)
