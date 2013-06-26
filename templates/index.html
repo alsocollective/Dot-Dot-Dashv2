@@ -56,15 +56,16 @@
 		<li id="contactLink"><a href="#work">Contact</a></li>
 		<li><a href="{{categories.SocialMedia.text.0.type}}"><img id="{{categories.SocialMedia.text.0.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.0.bkImg}}"></a></li>
 		<li><a href="{{categories.SocialMedia.text.1.type}}"><img id="{{categories.SocialMedia.text.1.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.1.bkImg}}"></a></li>
+		<li><a href="{{categories.SocialMedia.text.2.type}}"><img id="{{categories.SocialMedia.text.2.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.2.bkImg}}"></a></li>
 	</ul>
 </nav>
 
 {%with quote=categories.Quote.text.0%}
 	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="{{quote.placeHold}}" autoplay loop>
 		{% for vidType in quote.bkVid%}
-		<source src="http://localhost/videos/Lightning/Lightning.mp4" type="video/mp4"/>
+<!-- 		<source src="http://localhost/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
 		<!-- http://stackoverflow.com/questions/8088364/html5-video-will-not-loop -->
-		<!-- <source src="http://192.168.100.105:8124/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/> -->
+		<source src="http://192.168.100.105:8124/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
 		{%endfor%}
 
 	</video></div>
@@ -235,8 +236,8 @@
 			{%with quote=categories.Quote.text.0%}
 				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
 				{% for vidType in quote.bkVid%}
-					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"}{% else %}
-					{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.name}}"},{% endif %}
+					{% if forloop.last %}{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"}{% else %}
+					{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"},{% endif %}
 				{%endfor%}
 				],"loadImg":"{{quote.placeHold}}"},
 			{%endwith%}
@@ -248,9 +249,9 @@
 				{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","mp4":[
 					{% for vidType in cat.bkVid%}
 						{% if forloop.last %}
-						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
 				],"loadImg":"{{work.placeHold}}"},
@@ -260,9 +261,9 @@
 				{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
 					{% for vidType in categories.Work.bkVid%}
 						{% if forloop.last %}
-						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"}
+						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-						{type: "video/{{vidType.type}}", src: "http://192.168.100.105:8124/static/uploaded/{{vidType.location}}"},
+						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
 				],"loadImg":"{{work.placeHold}}"},

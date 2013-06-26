@@ -33,7 +33,7 @@ class MediaNode(models.Model):
 	def __unicode__(self):
 		return self.title
 
-	#url = models.URLField(max_length=800, blank=True)
+	url = models.URLField(max_length=800, blank=True)
 
 
 class VideoNode(models.Model):
