@@ -4,10 +4,26 @@ home
 {% endblock %}
 
 {% block content %}
+<style type="text/css">
+	.ui-content{
+		background-image: url("/../static/uploaded/{{text.0.placeHold}}");
+		background-position:center;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+		background-size: cover;
+		min-height: inherit;
+		padding: 0;
+	}
+</style>
+
 <img src="/../static/img/assets/logo.png">
 
 <h1>
 {{text.0.type}}
 </h1>
+<div id="bkContainer">
+</div>
+
 
 {% endblock %}

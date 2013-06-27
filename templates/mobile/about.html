@@ -4,6 +4,11 @@ about
 {% endblock %}
 
 {% block content %}
+	<style type="text/css">
+		.ui-content{
+			background-image: url(none);
+		}
+	</style>
 
 	<div id="containerAbout">
 		{% for sec in text%}
@@ -11,5 +16,8 @@ about
 			<div>{{sec.type|safe}}</div>
 		{%endfor%}
 	</div>
+
+
+
 
 {% endblock %}

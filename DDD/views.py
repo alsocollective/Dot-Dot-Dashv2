@@ -6,9 +6,7 @@ def home(request):
 
 def basic(request):
 	if(request.mobile):
-		print "MOBILE VERSION!!!!"
 		quotes = Category.objects.all().filter(title = "Quote")[0]
-		print quotes
 		return render_to_response("mobile/index.html",getText(quotes.textFields.all()))
 	else:
 		print "normal version"
