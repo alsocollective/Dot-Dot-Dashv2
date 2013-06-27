@@ -70,7 +70,7 @@ class mediaAdmin(admin.ModelAdmin):
 		(None,{'fields':['location']}),
 		('Advance options', {
 			'classes':('collapse',),
-			'fields':('description','title','fileType')
+			'fields':('url','description','title','fileType','slug')
 			}),
 	]
 

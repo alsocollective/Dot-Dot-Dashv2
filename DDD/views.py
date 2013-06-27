@@ -5,7 +5,7 @@ def home(request):
 	return render_to_response('index.html',{"nothing":"nothing"})
 
 def basic(request):
-	if(not request.mobile):
+	if(request.mobile):
 		quotes = Category.objects.all().filter(title = "Quote")[0]
 		return render_to_response("mobile/index.html",getText(quotes.textFields.all()))
 	else:
@@ -36,7 +36,8 @@ def about(request):
 
 def services(request):
 	data = Category.objects.all().filter(title = "Services")[0]
-	out = {}
+	out = getBkVid(data.bkVideo);
+	out.update(getArticle(data.articleFields.all()))
 	out.update(getText(data.textFields.all()))
 	out.update(getImages(data.mediaField.all()))
 	return render_to_response("mobile/services.html",out)
@@ -45,7 +46,7 @@ def services(request):
 
 def clients(request):
 	data = Category.objects.all().filter(title = "Clients")[0]
-	out = {};
+	out = getBkImg(data.bkImage);
 	out.update(getImages(data.mediaField.all()))
 	out.update(getText(data.textFields.all()))
 	return render_to_response("mobile/clients.html",out)

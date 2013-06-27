@@ -4,19 +4,13 @@
 
 {% block content %}
 
-<!-- {{articles}} -->
-<br>
-<br>
 {% for article in articles%}
-	<a href="/works/{{article.slug}}/">{{article.slug}}</a>
+	<h1><a href="/works/{{article.slug}}/">{{article.title}}</a></h1>
+	<h3>{{article.subHead}}</h3>
+	<p>
+		{{article.description}}
+	</p>
 	<br>
 {% endfor %}
-
-<style type="text/css">
-	.ui-content{
-		background-image: url(none);
-	}
-</style>
-
 
 {% endblock %}

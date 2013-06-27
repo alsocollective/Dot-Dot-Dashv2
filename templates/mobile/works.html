@@ -6,15 +6,17 @@
 {% block content %}
 
 <br>
-{{page.title}}
+<h1>{{page.title}}</h1>
 <br>
 	{%for pages in page.pages%}
 		{% for text in pages.text%}
 			<p>{{text.type}}</p>
 		{%endfor%}
+		<p>
 		{% for media in pages.media%}
 			<img src="/../static/uploaded/{{media.location}}"> <br>
 		{%endfor%}
+		</p>
 	{%endfor%}
 
 {% endblock %}
