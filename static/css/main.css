@@ -404,7 +404,7 @@
 		width: 100%;
 		min-width:20em;
 		position: absolute;
-		bottom: 0px;
+		bottom: 40px;
 		left: 0px;
 	}
 
@@ -519,15 +519,17 @@
 
 	#work .project{
 		width: 45%;
-		height: 14em;
+		height: 6em;
 		overflow: hidden;
 		display: inline-block;
 		vertical-align: top;
-		padding: 0 2.5% 0 2.5%;
+		padding: 1.2em 2.5% 1.2em 2.5%;
 	}
 
 	#work .project:hover{
 		background-color: #ccf;
+		height: auto;
+		overflow: visible;
 	}
 	.project h2{
 		font-family: sans-serif;
