@@ -58,8 +58,8 @@
 		font-family: "chennai-slab",serif;
 		font-family: "kulturista-web",serif;
 		font-family: "arvo",serif;
-		font-family: "ocr-a-std",sans-serif;*/
-		font-family: monospace;
+		font-family: "ocr-a-std",sans-serif;
+		font-family: monospace;*/
 		padding:0;
 		margin:0;
 		height: 100%;
@@ -98,9 +98,9 @@
 		font-size: 3em;
 		text-decoration: none;
 		text-transform: uppercase;
-		font-family: "ocr-a-std",sans-serif;
 		margin: 0;
 		padding: 0;
+		font-family: "adelle-sans",sans-serif;
 	}
 
 	h2 {
