@@ -1,5 +1,24 @@
+<style type="text/css">
+
 {%with objs=content.media%}
-	{%for obj in objs%}
-	<img style="width:100px;height:auto;" src="/static/uploaded/{{obj.location}}">
-	{%endfor%}
+{%for obj in objs%}
+       #{{obj.slug}}{
+               width: 50%;
+               height: 50%;
+			   display:inline-block;
+			   margin:0;
+			   position: relative;
+               background-image: url("/../static/uploaded/{{obj.location}}");
+               background-position:center;
+               -webkit-background-size: cover;
+               -moz-background-size: cover;
+               -o-background-size: cover;
+               background-size: cover;
+               padding: 0;
+               z-index: -1;
+       }
+	   {%endfor%}
+</style>
+
+	{%for obj in objs%}<div id="{{obj.slug}}"></div>{%endfor%}
 {%endwith%}

@@ -26,8 +26,8 @@
 		<link rel="icon" type="image/png" href="/../static/img/logo.png">
 
 
-		<link href="http://www.alsocollective.com:8000/static/css/video-js.css" rel="stylesheet">
-		<script src="http://www.alsocollective.com:8000/static/js/video.js"></script>
+		<link href="http://localhost:8000/static/css/video-js.css" rel="stylesheet">
+		<script src="http://localhost:8000/static/js/video.js"></script>
 		<!-- <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
 		<script src="http://vjs.zencdn.net/c/video.js"></script> -->
 		<script>
@@ -53,7 +53,7 @@
 		<li id="serviceLink"><a href="#services">Services</a></li>
 		<li id="clientsLink"><a href="#clients">Clients</a></li>
 		<li id="ourWorkLink"><a href="#work">Our Work</a></li>
-		<li id="contactLink"><a href="#work">Contact</a></li>
+		<li id="contactLink"><a href="#contact">Contact</a></li>
 		<li><a href="{{categories.SocialMedia.text.0.type}}"><img id="{{categories.SocialMedia.text.0.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.0.bkImg}}"></a></li>
 		<li><a href="{{categories.SocialMedia.text.1.type}}"><img id="{{categories.SocialMedia.text.1.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.1.bkImg}}"></a></li>
 		<li><a href="{{categories.SocialMedia.text.2.type}}"><img id="{{categories.SocialMedia.text.2.location}}" width="40px" src="/static/uploaded/{{categories.SocialMedia.text.2.bkImg}}"></a></li>
@@ -61,12 +61,12 @@
 </nav>
 
 {%with quote=categories.Quote.text.0%}
-	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="http://www.alsocollective.com:8000/static/uploaded/{{quote.placeHold}}" autoplay loop>
-		<!-- 		<source src="http://www.alsocollective.com/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
+	<div class="bkImage"><video id="vid_1" class="video-js vjs-default-skin" poster="http://localhost:8000/static/uploaded/{{quote.placeHold}}" autoplay loop>
+		<!-- 		<source src="http://localhost/videos/Lightning/Lightning.mp4" type="video/mp4"/> -->
 		<!-- http://stackoverflow.com/questions/8088364/html5-video-will-not-loop -->
 		{% for vidType in quote.bkVid%}
 
-		<source src="http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
+		<source src="http://localhost:8000/static/uploaded/{{vidType.name}}" type="video/{{vidType.type}}"/>
 		{%endfor%}
 
 	</video></div>
@@ -149,8 +149,8 @@
 
 <section id="clients">
 	<div id="containerAbout">
-	{{categories.Clients.title|safe}}
-	{{categories.Clients.text.0.type|safe}}
+		<h1>{{categories.Clients.title}}</h1>
+		<p>{{categories.Clients.text.0.type}}</p>
 	</div>
 	<div id="clientContainer">
 	{% for media in categories.Clients.media%}<div class="client">
@@ -198,8 +198,8 @@
 
 <section id="contact">
 	<div id="containerAbout">
-	<h2>{{categories.Contact.title|safe}}</h2>
-	<h3>{{categories.Contact.text.0.type|safe}}</h3>
+	<h1>{{categories.Contact.title|safe}}</h1>
+	<p>{{categories.Contact.text.0.type|safe}}</p>
 	</div>
 </section>
 
@@ -260,12 +260,12 @@
 				{"range":400,"parent":document.getElementById("{{quote.location}}"),"tag":"remove","mp4":[
 				{% for vidType in quote.bkVid%}
 					{% if forloop.last %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"}
+						{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.name}}"}
 					{% else %}
-						{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.name}}"},
+						{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.name}}"},
 					{% endif %}
 				{%endfor%}
-				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{quote.placeHold}}"},
+				],"loadImg":"http://localhost:8000/static/uploaded/{{quote.placeHold}}"},
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("about"),"tag":"aboutLink","img":1},
@@ -275,24 +275,24 @@
 				{"range":400,"parent":document.getElementById("services"),"tag":"serviceLink","mp4":[
 					{% for vidType in cat.bkVid%}
 						{% if forloop.last %}
-							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
-				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{work.placeHold}}"},
+				],"loadImg":"http://localhost:8000/static/uploaded/{{work.placeHold}}"},
 			{%endwith%}
 
 			{"range":400,"parent":document.getElementById("clients"),"tag":"clientsLink","img":2},
 				{"range":400,"parent":document.getElementById("work"),"tag":"ourWorkLink","mp4":[
 					{% for vidType in categories.Work.bkVid%}
 						{% if forloop.last %}
-							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"}
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"}
 						{% else %}
-							{type: "video/{{vidType.type}}", src: "http://www.alsocollective.com:8000/static/uploaded/{{vidType.location}}"},
+							{type: "video/{{vidType.type}}", src: "http://localhost:8000/static/uploaded/{{vidType.location}}"},
 						{% endif %}
 					{%endfor%}
-				],"loadImg":"http://www.alsocollective.com:8000/static/uploaded/{{work.placeHold}}"},
+				],"loadImg":"http://localhost:8000/static/uploaded/{{work.placeHold}}"},
 
 			{%with contact=categories.Contact%}
 				{"range":400,"parent":document.getElementById("contact"),"tag":"contactLink","img":3}
