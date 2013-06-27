@@ -52,7 +52,7 @@
    ========================================================================== */
 
 	body {
-		/*font-family: "letter-gothic-std", Monospace;*/
+		font-family: "letter-gothic-std", Monospace;
 /*		font-family: "prestige-elite-std",monospace;*/
 		/*font-family: "sax-mono",monospace;
 		font-family: "chennai-slab",serif;
@@ -74,7 +74,7 @@
    ========================================================================== */
 
 	p {
-		font-size: 0.9em;
+		font-size: 1em;
 	}
 
 	blockquote {
@@ -95,10 +95,12 @@
 	}
 
 	h1 {
-		font-size: 3.6em;
-
+		font-size: 3em;
 		text-decoration: none;
 		text-transform: uppercase;
+		font-family: "ocr-a-std",sans-serif;
+		margin: 0;
+		padding: 0;
 	}
 
 	h2 {
@@ -143,6 +145,11 @@
 /* ==========================================================================
    Custom Styles
    ========================================================================== */
+
+	#imgTextBack p{
+		color: #fff;
+		font-size: 3em;
+	}
 
 	.bkImage{
 		width: 100%;
@@ -304,23 +311,25 @@
 	}
 
 /* == About == */
-	#about h1{
+	/*#about h1{
 		padding-top: 2%;
 		margin-bottom: 2%;
 		text-align: center;
 		font-family: sans-serif;
 		font-weight: normal;
-	}
+	}*/
 
 	#containerAbout{
 		width: 75%;
 		min-width:20em;
 		margin:7% auto 0 auto;
 		background-color: rgba(255,255,255,.9);
+		padding-left: 1.5em;
+		padding-bottom: 1.5em;
 	}
 
 	#twoColoumContent{
-		width: 95%;
+		/*width: 95%;*/
 		margin:0 auto 0 auto;
 		padding-bottom: 2%;
 		-webkit-columns: 2; /* Safari and Chrome */
@@ -357,6 +366,8 @@
 		display: none;
 		/* same color as containerAbout*/
 		background-color: rgba(255,255,255,.9);
+		
+		padding: 0 1.5em 1em 1.5em;
 
 		transition: height 1s, width 1s;
 		-moz-transition: height 1s, width 1s;
@@ -364,18 +375,18 @@
 		-o-transition: height 1s, width 1s;
 	}
 
-	.servicCat h1{
+	/*.servicCat h1{
 		padding-top: 2%;
 		margin-bottom: 2%;
 		margin-top: 0%;
 		text-align: left;
 		font-family: sans-serif;
 		font-weight: normal;
-	}
+	}*/
 
-	.servicCat p{
+	/*.servicCat p{
 		padding: 0 5% 2em 5%;
-	}
+	}*/
 
 	#basicService {
 		height: auto;
@@ -408,10 +419,10 @@
 		height: 150px;
 		-webkit-border-radius: 50%;
 		margin: 0 0 0 0;
-		transition: all 1s;
-		-moz-transition: all 1s;
-		-webkit-transition: all 1s;
-		-o-transition: all 1s;
+		transition: all 0.2s;
+		-moz-transition: all 0.2s;
+		-webkit-transition: all 0.2s;
+		-o-transition: all 0.2s;
 	}
 	.serviceCircle img{
 		width: 100%;
@@ -425,10 +436,17 @@
 		margin: 5px 0px 0px 5px;
 	}
 
-/* == ClientArea == */
+/* == Client Section == */
 	#clients{
 		padding-top: 20%;
 	}
+	
+	
+	#clients img{
+		width: 180px;
+		padding: 0 1.8em 0 1.8em;
+	}
+	
 	#clientContainer{
 		text-align: center;
 		width: 100%;
@@ -441,6 +459,7 @@
 		min-width: 200px;
 		min-height: 100px;
 	}
+	
 
 /* == Work == */
 	#work{
@@ -527,7 +546,7 @@
 		top: 0px;
 		left: -100%;
 		direction: ltr;
-		background-color:#fcf;
+		background-color: rgba(255,255,255,0.8);
 
 		transition: left 1s;
 		-moz-transition: left 1s;
