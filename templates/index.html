@@ -180,11 +180,8 @@
 	<div id="mainContainer"><div id="leftContainer">
 			<div id="workTopPadding"></div>
 			<div id="workButtons">{%for article in work.articles%}<a href="#" id="{{article.title}}" class="project">
-				<h2>{{article.title|safe}}</h2>
-				<h3>{{article.subHead|safe}}</h3>
-				<p>
-					{{article.description|safe}}
-				</p>
+				<h2>{{article.title|safe}}: {{article.subHead|safe}}</h2>
+				<p>{{article.description|safe}}</p>
 				</a>{%endfor%}
 			</div>
 		</div><div id="rightContainer">
