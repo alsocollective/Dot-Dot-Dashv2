@@ -537,14 +537,14 @@
 		text-transform:uppercase;
 	}
 	.project h3{
-		font-family: sans-serif;
 		color: #fff;
 		margin: 0px;
-		line-height: .95em;	
-		text-transform:uppercase;
+		text-transform: uppercase;
+		color: #444;
 	}
 	.project p{
 		margin-top: 0;
+		font-size: 0.6em;
 	}
 
 	.royalSlider {
