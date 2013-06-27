@@ -106,10 +106,12 @@
 	h2 {
 		font-size: 2em;
 		color: #FFF;
+		font-family: "adelle-sans",sans-serif;
 	}
 
 	h3 {
 		font-size: 1em;
+		font-family: "adelle-sans",sans-serif;
 	}
 
 	section {
@@ -504,7 +506,6 @@
 		height: auto;
 	}
 	
-	
 	#rightContainer{
 		display: inline-block;
 		width: 50%;
@@ -519,7 +520,7 @@
 
 	#work .project{
 		width: 45%;
-		height: 10em;
+		height: auto;
 		overflow: hidden;
 		display: inline-block;
 		vertical-align: top;
@@ -527,10 +528,11 @@
 	}
 
 	#work .project:hover{
-		background-color: #ccf;
+		background-color: #333;
+		color: #fff;
 	}
 	.project h2{
-		font-family: sans-serif;
+
 		color: #000;
 		margin: 0px;
 		line-height: .95em;
