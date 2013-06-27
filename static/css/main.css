@@ -519,7 +519,7 @@
 
 	#work .project{
 		width: 45%;
-		height: 6em;
+		height: 10em;
 		overflow: hidden;
 		display: inline-block;
 		vertical-align: top;
@@ -528,8 +528,6 @@
 
 	#work .project:hover{
 		background-color: #ccf;
-		height: auto;
-		overflow: visible;
 	}
 	.project h2{
 		font-family: sans-serif;
