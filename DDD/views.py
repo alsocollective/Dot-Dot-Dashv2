@@ -5,7 +5,7 @@ def home(request):
 	return render_to_response('index.html',{"nothing":"nothing"})
 
 def basic(request):
-	if(request.mobile):
+	if(not request.mobile):
 		quotes = Category.objects.all().filter(title = "Quote")[0]
 		return render_to_response("mobile/index.html",getText(quotes.textFields.all()))
 	else:
