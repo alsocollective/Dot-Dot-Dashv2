@@ -474,7 +474,7 @@
 	}
 
 	#mainContainer{
-		height: 100%;
+		/*height: 100%;*/
 		width: 200%;
 		transition: left 1s;
 		-moz-transition: left 1s;
@@ -488,7 +488,7 @@
 		display: inline-block;
 		vertical-align: top;
 		width: 50%;
-		height: 100%;
+		/*height: 100%;*/
 	}
 
 	#workTopPadding{
@@ -508,7 +508,7 @@
 	#rightContainer{
 		display: inline-block;
 		width: 50%;
-		height: 100%;
+		/*height: 100%;*/
 		background-color: #ccf;
 	}
 
