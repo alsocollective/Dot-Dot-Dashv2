@@ -36,7 +36,7 @@ def about(request):
 
 def services(request):
 	data = Category.objects.all().filter(title = "Services")[0]
-	out = getBkVid(data.bkVideo);
+	out = getBkImg(data.bkImage);
 	out.update(getArticle(data.articleFields.all()))
 	out.update(getText(data.textFields.all()))
 	out.update(getImages(data.mediaField.all()))
